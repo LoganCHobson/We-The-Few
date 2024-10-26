@@ -7,4 +7,5 @@ public class CutsceneNodeContainer : ScriptableObject
 {
     public List<NodeLinkData> nodeLinks = new List<NodeLinkData>();
     public List<CutsceneNodeData> cutsceneNodeData = new List<CutsceneNodeData>();
+    public List<ExposedProperty> exposedProperties = new List<ExposedProperty>();
 }

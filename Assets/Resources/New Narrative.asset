@@ -13,10 +13,34 @@ MonoBehaviour:
   m_Name: New Narrative
   m_EditorClassIdentifier: 
   nodeLinks:
-  - baseNodeGuid: 594cdfdb-ade9-42b3-a06f-4c5c07d27960
+  - baseNodeGuid: c58fc531-cb04-4689-906c-2b126e63f8c1
     portName: Next
-    targetNodeGuid: fd0f37f0-e2f7-466c-8501-6e499816aac1
+    targetNodeGuid: e8280b69-69cf-4a07-a589-23f9450cf616
+  - baseNodeGuid: e8280b69-69cf-4a07-a589-23f9450cf616
+    portName: Yes
+    targetNodeGuid: de4239e8-fadc-46aa-bfe3-dd038bb5efa4
+  - baseNodeGuid: e8280b69-69cf-4a07-a589-23f9450cf616
+    portName: No
+    targetNodeGuid: cb46d0f7-b89e-4716-b2ab-69493e286660
+  - baseNodeGuid: de4239e8-fadc-46aa-bfe3-dd038bb5efa4
+    portName: Choice 1
+    targetNodeGuid: 2ff0e102-5190-4b73-952e-ccc9df706e3c
+  - baseNodeGuid: cb46d0f7-b89e-4716-b2ab-69493e286660
+    portName: Choice 1
+    targetNodeGuid: 2ff0e102-5190-4b73-952e-ccc9df706e3c
   cutsceneNodeData:
   - nodeName: Dialogue Node
-    guid: fd0f37f0-e2f7-466c-8501-6e499816aac1
-    position: {x: 242, y: 200}
+    guid: e8280b69-69cf-4a07-a589-23f9450cf616
+    position: {x: 236, y: 200}
+  - nodeName: Dialogue Node
+    guid: de4239e8-fadc-46aa-bfe3-dd038bb5efa4
+    position: {x: 544, y: 152}
+  - nodeName: Dialogue Node
+    guid: cb46d0f7-b89e-4716-b2ab-69493e286660
+    position: {x: 544, y: 296}
+  - nodeName: Dialogue Node
+    guid: 2ff0e102-5190-4b73-952e-ccc9df706e3c
+    position: {x: 894, y: 229}
+  exposedProperties:
+  - propertyName: Character
+    propertyValue: Tomas

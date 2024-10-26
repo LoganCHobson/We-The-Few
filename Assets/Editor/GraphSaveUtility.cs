@@ -21,9 +21,35 @@ public class GraphSaveUtility
 
     public void SaveGraph(string _fileName)
     {
-        if (!edges.Any()) return; //If no connections, dont bother saving.
+        CutsceneNodeContainer container = ScriptableObject.CreateInstance<CutsceneNodeContainer>();
+        if (!SaveNodes(container))
+        {
+            return;
+        }
 
-        CutsceneNodeContainer nodeContainer = ScriptableObject.CreateInstance<CutsceneNodeContainer>();
+        SaveExposedProperties(container);
+
+
+        //Auto creation of folder if it dont exist.
+        if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+        {
+            AssetDatabase.CreateFolder("Assets", "Resources");
+        }
+
+        AssetDatabase.CreateAsset(container, $"Assets/Resources/{_fileName}.asset");
+        AssetDatabase.SaveAssets();
+    }
+
+    private void SaveExposedProperties(CutsceneNodeContainer container)
+    {
+        container.exposedProperties.AddRange(targetGraphView.exposedProperties);
+    }
+
+    private bool SaveNodes(CutsceneNodeContainer container)
+    {
+        if (!edges.Any()) return false; //If no connections, dont bother saving.
+
+
         Edge[] connectedPorts = edges.Where(edge => edge.input.node != null).ToArray();
 
         for (int i = 0; i < connectedPorts.Length; i++)
@@ -31,7 +57,7 @@ public class GraphSaveUtility
             CutsceneNode outputNode = connectedPorts[i].output.node as CutsceneNode;
             CutsceneNode inputNode = connectedPorts[i].input.node as CutsceneNode;
 
-            nodeContainer.nodeLinks.Add(new NodeLinkData
+            container.nodeLinks.Add(new NodeLinkData
             {
                 baseNodeGuid = outputNode.guid,
                 portName = connectedPorts[i].output.portName,
@@ -41,7 +67,7 @@ public class GraphSaveUtility
 
         foreach (CutsceneNode node in nodes.Where(node => !node.entryPoint))
         {
-            nodeContainer.cutsceneNodeData.Add(new CutsceneNodeData
+            container.cutsceneNodeData.Add(new CutsceneNodeData
             {
                 nodeName = node.name,
                 guid = node.guid,
@@ -49,14 +75,7 @@ public class GraphSaveUtility
             });
         }
 
-        //Auto creation of folder if it dont exist.
-        if (!AssetDatabase.IsValidFolder("Assets/Resources"))
-        {
-            AssetDatabase.CreateFolder("Assets", "Resources");
-        }
-
-        AssetDatabase.CreateAsset(nodeContainer, $"Assets/Resources/{_fileName}.asset");
-        AssetDatabase.SaveAssets();
+        return true;
     }
 
     public void LoadGraph(string _fileName)
@@ -71,6 +90,17 @@ public class GraphSaveUtility
         ClearGraph();
         CreateNodes();
         ConnectNodes();
+        CreateExposedProperties();
+    }
+
+    private void CreateExposedProperties()
+    {
+        targetGraphView.ClearBlackboardProperties();
+
+        foreach (ExposedProperty property in containerCache.exposedProperties)
+        {
+            targetGraphView.AddPropertyToBlackboard(property);
+        }
     }
 
     private void ConnectNodes()
@@ -107,7 +137,7 @@ public class GraphSaveUtility
     {
         foreach (CutsceneNodeData node in containerCache.cutsceneNodeData)
         {
-            DialogueNode tempNode = targetGraphView.CreateDialogueNode(node.nodeName);
+            DialogueNode tempNode = targetGraphView.CreateDialogueNode(node.nodeName, Vector2.zero);
             tempNode.guid = node.guid;
             targetGraphView.AddElement(tempNode);
 
