@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbab9c76bff1277498afd3fe845c0063, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  nodeLinks:
+  - baseNodeGuid: 71713d05-b2c1-435d-bbc6-76e47436f378
+    portName: Next
+    targetNodeGuid: b706e8d3-a139-4aa8-86e0-72ae3cfa2639
+  - baseNodeGuid: b706e8d3-a139-4aa8-86e0-72ae3cfa2639
+    portName: Choice 0
+    targetNodeGuid: f69b6669-3a28-49db-82fd-c6a6be2741a8
+  - baseNodeGuid: b706e8d3-a139-4aa8-86e0-72ae3cfa2639
+    portName: Choice 1
+    targetNodeGuid: cdfe1a7f-a1bd-4b35-9f0e-b2b527b74f68
+  - baseNodeGuid: cdfe1a7f-a1bd-4b35-9f0e-b2b527b74f68
+    portName: Choice 0
+    targetNodeGuid: 75643c71-9a1c-4c70-81d2-1995220f4625
+  - baseNodeGuid: f69b6669-3a28-49db-82fd-c6a6be2741a8
+    portName: Choice 0
+    targetNodeGuid: 75643c71-9a1c-4c70-81d2-1995220f4625
+  cutsceneNodeData:
+  - guid: b706e8d3-a139-4aa8-86e0-72ae3cfa2639
+    position: {x: 268, y: 200}
+  - guid: f69b6669-3a28-49db-82fd-c6a6be2741a8
+    position: {x: 547, y: 162}
+  - guid: cdfe1a7f-a1bd-4b35-9f0e-b2b527b74f68
+    position: {x: 547, y: 263}
+  - guid: 75643c71-9a1c-4c70-81d2-1995220f4625
+    position: {x: 845, y: 200}
