@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbab9c76bff1277498afd3fe845c0063, type: 3}
-  m_Name: New Narrative
+  m_Name: TEst
   m_EditorClassIdentifier: 
   nodeLinks:
   - baseNodeGuid: 3946cac3-a151-4a68-bd45-26802bddcc5e
@@ -19,6 +19,9 @@ MonoBehaviour:
   - baseNodeGuid: 3068f603-039d-46b4-8a39-9ff3cdcf2f63
     portName: Output
     targetNodeGuid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
+  - baseNodeGuid: e5ffe61f-2468-4665-93b4-adcd93ffdc2f
+    portName: Output
+    targetNodeGuid: 4d3c693a-1e1d-4c70-9561-4c58ebd1ff35
   - baseNodeGuid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
     portName: Test
     targetNodeGuid: e5ffe61f-2468-4665-93b4-adcd93ffdc2f
@@ -52,6 +55,18 @@ MonoBehaviour:
     guid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
     position: {x: 636, y: 200}
     dialogText: '"TEST"'
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 4d3c693a-1e1d-4c70-9561-4c58ebd1ff35
+    position: {x: 1250, y: 200}
+    dialogText: Test2
     cameraName: 
     focusName: 
     cameraZoomLevel: 0

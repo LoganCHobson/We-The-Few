@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static CutsceneNodeData;
 
 public class GraphSaveUtility
 {
@@ -69,7 +70,7 @@ public class GraphSaveUtility
         {
             CutsceneNodeData nodeData = node.type switch
             {
-                NodeType.Dialogue => new DialogueNodeData
+                NodeType.Dialogue => new CutsceneNodeData
                 {
                     type = node.type,
                     nodeName = node.name,
@@ -78,17 +79,18 @@ public class GraphSaveUtility
                     dialogText = (node as DialogueNode).dialogText 
                 }
                 ,
-                NodeType.Camera => new CameraNodeData
+                NodeType.Camera => new CutsceneNodeData
                 {
                     type = node.type,
                     nodeName = node.name,
                     guid = node.guid,
                     position = node.GetPosition().position,
                     cameraZoomLevel = (node as CameraNode).cameraZoomLevel,
-                    camera = (node as CameraNode).camera,
-                    focus = (node as CameraNode).focus,
+                    cameraName = (node as CameraNode).camera?.name, // Save only the name
+                    focusName = (node as CameraNode).focus.name,
                 },
-                NodeType.UnityEvent => new UnityEventNodeData
+
+                NodeType.UnityEvent => new CutsceneNodeData
                 {
                     type = node.type,
                     nodeName = node.name,
@@ -166,25 +168,25 @@ public class GraphSaveUtility
 
     private void CreateNodes()
     {
-        foreach (CutsceneNodeData node in containerCache.cutsceneNodeData)
+        foreach (CutsceneNodeData nodeData in containerCache.cutsceneNodeData)
         {
-            CutsceneNode tempNode = node.type switch
+            CutsceneNode tempNode = nodeData.type switch
             {
-                NodeType.Dialogue => targetGraphView.CreateDialogueNode(node.nodeName, Vector2.zero),
-                NodeType.Camera => targetGraphView.CreateCameraNode(node.nodeName, Vector2.zero),
-                NodeType.UnityEvent => targetGraphView.CreateUnityEventNode(node.nodeName, Vector2.zero),
+                NodeType.Dialogue => targetGraphView.CreateDialogueNode(nodeData.nodeName, Vector2.zero, nodeData.dialogText),
+                NodeType.Camera => targetGraphView.CreateCameraNode(nodeData.nodeName, Vector2.zero, GameObject.Find(nodeData.cameraName).GetComponent<Camera>(), GameObject.Find(nodeData.focusName)),
+                NodeType.UnityEvent => targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero),
                 _ => null
             };
 
             if (tempNode != null)
             {
-                tempNode.guid = node.guid;
+                tempNode.guid = nodeData.guid;
                 targetGraphView.AddElement(tempNode);
 
-                if (node.type == NodeType.Dialogue)
+                if (nodeData.type == NodeType.Dialogue)
                 {
                     var nodePorts = containerCache.nodeLinks
-                                    .Where(link => link.baseNodeGuid == node.guid)
+                                    .Where(link => link.baseNodeGuid == nodeData.guid)
                                     .ToList();
 
                     nodePorts.ForEach(port => targetGraphView.AddChoicePort((DialogueNode)tempNode, port.portName));
@@ -192,6 +194,7 @@ public class GraphSaveUtility
             }
         }
     }
+
 
     private void ClearGraph()
     {

@@ -110,29 +110,29 @@ public class CutsceneGraphView : GraphView
         switch(type)
         {
             case NodeType.Dialogue:
-                AddElement(CreateDialogueNode(_nodeName, _mousePosition));
+                AddElement(CreateDialogueNode(_nodeName, _mousePosition, ""));
                 break;
             case NodeType.Camera:
-                AddElement(CreateCameraNode(_nodeName, _mousePosition));
+                AddElement(CreateCameraNode(_nodeName, _mousePosition, null, null));
                 break;
             case NodeType.UnityEvent:
                 AddElement(CreateUnityEventNode(_nodeName, _mousePosition));
                 break;
             default: 
-                AddElement(CreateDialogueNode(_nodeName, _mousePosition));
+                AddElement(CreateDialogueNode(_nodeName, _mousePosition, ""));
                 break;
         }
         
     }
 
-    public DialogueNode CreateDialogueNode(string _nodeName, Vector2 _position)
+    public DialogueNode CreateDialogueNode(string _nodeName, Vector2 _position, string _dialogText)
     {
         DialogueNode dialogueNode = new DialogueNode()
         {
             type = NodeType.Dialogue,
             name = _nodeName,
             title = _nodeName,
-            dialogText = "",
+            dialogText = _dialogText,
             guid = Guid.NewGuid().ToString(),
 
         };
@@ -153,7 +153,7 @@ public class CutsceneGraphView : GraphView
             dialogueNode.dialogText = evt.newValue;
             //dialogueNode.title = evt.newValue;
         });
-        //textField.SetValueWithoutNotify(dialogueNode.title);
+        textField.SetValueWithoutNotify(dialogueNode.dialogText);
         dialogueNode.mainContainer.Add(textField);
 
         dialogueNode.RefreshExpandedState();
@@ -163,7 +163,7 @@ public class CutsceneGraphView : GraphView
         return dialogueNode;
     }
 
-    public CameraNode CreateCameraNode(string _nodeName, Vector2 _position)
+    public CameraNode CreateCameraNode(string _nodeName, Vector2 _position, Camera _camera, GameObject _focus)
     {
         CameraNode cameraNode = new CameraNode()
         {
@@ -172,6 +172,8 @@ public class CutsceneGraphView : GraphView
             name = _nodeName,
             title = _nodeName,
             guid = Guid.NewGuid().ToString(),
+            camera = _camera,
+            focus = _focus
 
         };
 

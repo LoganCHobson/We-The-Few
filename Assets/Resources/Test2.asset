@@ -10,18 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbab9c76bff1277498afd3fe845c0063, type: 3}
-  m_Name: New Narrative
+  m_Name: Test2
   m_EditorClassIdentifier: 
   nodeLinks:
   - baseNodeGuid: 3946cac3-a151-4a68-bd45-26802bddcc5e
     portName: Next
     targetNodeGuid: 3068f603-039d-46b4-8a39-9ff3cdcf2f63
-  - baseNodeGuid: 3068f603-039d-46b4-8a39-9ff3cdcf2f63
-    portName: Output
-    targetNodeGuid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
-  - baseNodeGuid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
-    portName: Test
-    targetNodeGuid: e5ffe61f-2468-4665-93b4-adcd93ffdc2f
   cutsceneNodeData:
   - type: 1
     nodeName: Camera Node
@@ -30,30 +24,6 @@ MonoBehaviour:
     dialogText: 
     cameraName: Main Camera
     focusName: Player
-    cameraZoomLevel: 0
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls: []
-    eventName: 
-  - type: 1
-    nodeName: Camera Node
-    guid: e5ffe61f-2468-4665-93b4-adcd93ffdc2f
-    position: {x: 900, y: 200}
-    dialogText: 
-    cameraName: Main Camera
-    focusName: Bandit
-    cameraZoomLevel: 0
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls: []
-    eventName: 
-  - type: 0
-    nodeName: Dialogue Node
-    guid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
-    position: {x: 636, y: 200}
-    dialogText: '"TEST"'
-    cameraName: 
-    focusName: 
     cameraZoomLevel: 0
     unityEvent:
       m_PersistentCalls:

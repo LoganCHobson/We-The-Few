@@ -10,27 +10,22 @@ public class CutsceneNodeData
     public string guid;
     public Vector2 position;
 
-}
 
-[Serializable]
-public class DialogueNodeData : CutsceneNodeData
-{
+
+
     public string dialogText;
-}
 
-[Serializable]
-public class CameraNodeData : CutsceneNodeData
-{
-    public Camera camera;
-    public GameObject focus;
-    public float cameraZoomLevel; 
-}
 
-[Serializable]
-public class UnityEventNodeData : CutsceneNodeData
-{
+
+    public string cameraName;
+    public string focusName;
+    public float cameraZoomLevel;
+
+
+
     public UnityEvent unityEvent;
-    public string eventName; 
+    public string eventName;
+
 }
 
 public enum NodeType
