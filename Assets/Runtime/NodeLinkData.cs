@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class NodeLinkData
+public class NodeLinkData //For linking together ports.
 {
     public string baseNodeGuid;
     public string portName;

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class CutsceneGraphView : GraphView
@@ -103,18 +105,34 @@ public class CutsceneGraphView : GraphView
 
     //A bunch of logic regaridng how specific nodes are made.
     #region DialogueNode 
-    public void CreateNode(string _nodeName, Vector2 mousePosition)
+    public void CreateNode(string _nodeName, Vector2 _mousePosition, NodeType type = NodeType.Dialogue)
     {
-        AddElement(CreateDialogueNode(_nodeName, mousePosition));
+        switch(type)
+        {
+            case NodeType.Dialogue:
+                AddElement(CreateDialogueNode(_nodeName, _mousePosition));
+                break;
+            case NodeType.Camera:
+                AddElement(CreateCameraNode(_nodeName, _mousePosition));
+                break;
+            case NodeType.UnityEvent:
+                AddElement(CreateUnityEventNode(_nodeName, _mousePosition));
+                break;
+            default: 
+                AddElement(CreateDialogueNode(_nodeName, _mousePosition));
+                break;
+        }
+        
     }
 
-    public DialogueNode CreateDialogueNode(string _nodeName, Vector2 position)
+    public DialogueNode CreateDialogueNode(string _nodeName, Vector2 _position)
     {
-        var dialogueNode = new DialogueNode()
+        DialogueNode dialogueNode = new DialogueNode()
         {
+            type = NodeType.Dialogue,
             name = _nodeName,
             title = _nodeName,
-            dialogText = _nodeName,
+            dialogText = "",
             guid = Guid.NewGuid().ToString(),
 
         };
@@ -140,9 +158,95 @@ public class CutsceneGraphView : GraphView
 
         dialogueNode.RefreshExpandedState();
         dialogueNode.RefreshPorts();
-        dialogueNode.SetPosition(new Rect(position, defaultNodeSize));
+        dialogueNode.SetPosition(new Rect(_position, defaultNodeSize));
 
         return dialogueNode;
+    }
+
+    public CameraNode CreateCameraNode(string _nodeName, Vector2 _position)
+    {
+        CameraNode cameraNode = new CameraNode()
+        {
+            cameraZoomLevel = 0f,
+            type = NodeType.Camera,
+            name = _nodeName,
+            title = _nodeName,
+            guid = Guid.NewGuid().ToString(),
+
+        };
+
+        
+        ObjectField cameraField = new ObjectField
+        {
+            objectType = typeof(Camera),
+            allowSceneObjects = true,
+            value = cameraNode.camera
+        };
+        cameraField.RegisterValueChangedCallback(evt => cameraNode.camera = (Camera)evt.newValue);
+        cameraField.label = "Camera";
+        cameraNode.mainContainer.Add(cameraField);
+
+        ObjectField focusField = new ObjectField
+        {
+            objectType = typeof(GameObject),
+            allowSceneObjects = true,
+            value = cameraNode.focus
+        };
+        focusField.RegisterValueChangedCallback(evt => cameraNode.focus = (GameObject)evt.newValue);
+        focusField.label = "focus";
+        cameraNode.mainContainer.Add(focusField);
+
+
+        Port imputPort = AddPort(cameraNode, Direction.Input, Port.Capacity.Multi);
+        imputPort.portName = "Input";
+        cameraNode.inputContainer.Add(imputPort);
+        Port outputPort = AddPort(cameraNode, Direction.Output, Port.Capacity.Multi);
+        outputPort.portName = "Output";
+        cameraNode.outputContainer.Add(outputPort);
+        cameraNode.styleSheets.Add(Resources.Load<StyleSheet>("CameraColor"));
+
+        cameraNode.RefreshPorts();
+        cameraNode.RefreshExpandedState();
+        cameraNode.SetPosition(new Rect(_position, defaultNodeSize));
+
+        return cameraNode;
+    }
+    public UnityEventNode CreateUnityEventNode(string _nodeName, Vector2 _position)
+    {
+        UnityEventNode unityEventNode = new UnityEventNode()
+        {
+            eventName = "",
+            type = NodeType.UnityEvent,
+            name = _nodeName,
+            title = _nodeName,
+            guid = Guid.NewGuid().ToString(),
+            unityEvent = new UnityEvent(),
+        };
+
+        UnityEventNodeWrapper wrapper = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
+        wrapper.unityEvent = unityEventNode.unityEvent;
+
+        PropertyField eventField = new PropertyField();
+        eventField.bindingPath = "unityEvent";
+        eventField.Bind(new SerializedObject(wrapper));
+        unityEventNode.mainContainer.Add(eventField);
+
+
+        Port imputPort = AddPort(unityEventNode, Direction.Input, Port.Capacity.Multi);
+        imputPort.portName = "Input";
+        unityEventNode.inputContainer.Add(imputPort);
+        Port outputPort = AddPort(unityEventNode, Direction.Output, Port.Capacity.Multi);
+        outputPort.portName = "Output";
+        unityEventNode.outputContainer.Add(outputPort);
+        unityEventNode.styleSheets.Add(Resources.Load<StyleSheet>("UnityEventColor"));
+
+
+
+        unityEventNode.RefreshPorts();
+        unityEventNode.RefreshExpandedState();
+        unityEventNode.SetPosition(new Rect(_position, defaultNodeSize));
+
+        return unityEventNode;
     }
 
 

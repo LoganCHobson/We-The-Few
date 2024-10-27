@@ -67,12 +67,43 @@ public class GraphSaveUtility
 
         foreach (CutsceneNode node in nodes.Where(node => !node.entryPoint))
         {
-            container.cutsceneNodeData.Add(new CutsceneNodeData
+            CutsceneNodeData nodeData = node.type switch
             {
-                nodeName = node.name,
-                guid = node.guid,
-                position = node.GetPosition().position,
-            });
+                NodeType.Dialogue => new DialogueNodeData
+                {
+                    type = node.type,
+                    nodeName = node.name,
+                    guid = node.guid,
+                    position = node.GetPosition().position,
+                    dialogText = (node as DialogueNode).dialogText 
+                }
+                ,
+                NodeType.Camera => new CameraNodeData
+                {
+                    type = node.type,
+                    nodeName = node.name,
+                    guid = node.guid,
+                    position = node.GetPosition().position,
+                    cameraZoomLevel = (node as CameraNode).cameraZoomLevel,
+                    camera = (node as CameraNode).camera,
+                    focus = (node as CameraNode).focus,
+                },
+                NodeType.UnityEvent => new UnityEventNodeData
+                {
+                    type = node.type,
+                    nodeName = node.name,
+                    guid = node.guid,
+                    position = node.GetPosition().position,
+                    eventName = (node as UnityEventNode).eventName,
+                    unityEvent = (node as UnityEventNode).unityEvent
+
+                },
+                _ => null
+            };
+
+            container.cutsceneNodeData.Add(nodeData);
+
+
         }
 
         return true;
@@ -133,16 +164,32 @@ public class GraphSaveUtility
         targetGraphView.Add(tempEdge);
     }
 
-    private void CreateNodes() //Reminder to go back and fix this to work with all cutscene nodes.
+    private void CreateNodes()
     {
         foreach (CutsceneNodeData node in containerCache.cutsceneNodeData)
         {
-            DialogueNode tempNode = targetGraphView.CreateDialogueNode(node.nodeName, Vector2.zero);
-            tempNode.guid = node.guid;
-            targetGraphView.AddElement(tempNode);
+            CutsceneNode tempNode = node.type switch
+            {
+                NodeType.Dialogue => targetGraphView.CreateDialogueNode(node.nodeName, Vector2.zero),
+                NodeType.Camera => targetGraphView.CreateCameraNode(node.nodeName, Vector2.zero),
+                NodeType.UnityEvent => targetGraphView.CreateUnityEventNode(node.nodeName, Vector2.zero),
+                _ => null
+            };
 
-            var nodePorts = containerCache.nodeLinks.Where(node1 => node1.baseNodeGuid == node.guid).ToList();
-            nodePorts.ForEach(port => targetGraphView.AddChoicePort(tempNode, port.portName));
+            if (tempNode != null)
+            {
+                tempNode.guid = node.guid;
+                targetGraphView.AddElement(tempNode);
+
+                if (node.type == NodeType.Dialogue)
+                {
+                    var nodePorts = containerCache.nodeLinks
+                                    .Where(link => link.baseNodeGuid == node.guid)
+                                    .ToList();
+
+                    nodePorts.ForEach(port => targetGraphView.AddChoicePort((DialogueNode)tempNode, port.portName));
+                }
+            }
         }
     }
 

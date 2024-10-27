@@ -28,7 +28,18 @@ public class NodeSearchWindow : ScriptableObject, ISearchWindowProvider
             new SearchTreeEntry(new GUIContent("Dialogue Node", indentation))
             {
                 userData = new DialogueNode(), level = 2
+            },
+            new SearchTreeGroupEntry(new GUIContent("Camera"), 1),
+            new SearchTreeEntry(new GUIContent("Camera Node", indentation))
+            {
+                userData = new CameraNode(), level = 2
+            },
+            new SearchTreeGroupEntry(new GUIContent("Events"), 1),
+            new SearchTreeEntry(new GUIContent("UnityEvent Node", indentation))
+            {
+                userData = new UnityEventNode(), level = 2
             }
+
         };
         return tree;
     }
@@ -40,8 +51,17 @@ public class NodeSearchWindow : ScriptableObject, ISearchWindowProvider
         switch(SearchTreeEntry.userData) 
         {
             case DialogueNode dialogueNode:
-                graphView.CreateNode("Dialogue Node", localMousePosition);
+                graphView.CreateNode("Dialogue Node", localMousePosition, NodeType.Dialogue);
                 return true;
+
+            case CameraNode cameraNode:
+                graphView.CreateNode("Camera Node", localMousePosition, NodeType.Camera);
+                return true;
+
+            case UnityEventNode unityEventNode:
+                graphView.CreateNode("UnityEvent Node", localMousePosition, NodeType.UnityEvent);
+                return true;
+
 
             default: return false;
         

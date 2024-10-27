@@ -13,34 +13,26 @@ MonoBehaviour:
   m_Name: New Narrative
   m_EditorClassIdentifier: 
   nodeLinks:
-  - baseNodeGuid: c58fc531-cb04-4689-906c-2b126e63f8c1
+  - baseNodeGuid: 8ad89b71-a3a3-4e40-b1d5-a6f36d35b021
     portName: Next
-    targetNodeGuid: e8280b69-69cf-4a07-a589-23f9450cf616
-  - baseNodeGuid: e8280b69-69cf-4a07-a589-23f9450cf616
-    portName: Yes
-    targetNodeGuid: de4239e8-fadc-46aa-bfe3-dd038bb5efa4
-  - baseNodeGuid: e8280b69-69cf-4a07-a589-23f9450cf616
-    portName: No
-    targetNodeGuid: cb46d0f7-b89e-4716-b2ab-69493e286660
-  - baseNodeGuid: de4239e8-fadc-46aa-bfe3-dd038bb5efa4
-    portName: Choice 1
-    targetNodeGuid: 2ff0e102-5190-4b73-952e-ccc9df706e3c
-  - baseNodeGuid: cb46d0f7-b89e-4716-b2ab-69493e286660
-    portName: Choice 1
-    targetNodeGuid: 2ff0e102-5190-4b73-952e-ccc9df706e3c
+    targetNodeGuid: 02a4edc2-4f9b-4e7a-9fb7-d8da0d8d5d70
+  - baseNodeGuid: 02a4edc2-4f9b-4e7a-9fb7-d8da0d8d5d70
+    portName: Test
+    targetNodeGuid: fd24b3c1-7bb6-442a-9f02-ed8376e7c6e9
+  - baseNodeGuid: fd24b3c1-7bb6-442a-9f02-ed8376e7c6e9
+    portName: Output
+    targetNodeGuid: 5a990308-22e9-4d4a-9e62-59b94b210f59
   cutsceneNodeData:
-  - nodeName: Dialogue Node
-    guid: e8280b69-69cf-4a07-a589-23f9450cf616
-    position: {x: 236, y: 200}
-  - nodeName: Dialogue Node
-    guid: de4239e8-fadc-46aa-bfe3-dd038bb5efa4
-    position: {x: 544, y: 152}
-  - nodeName: Dialogue Node
-    guid: cb46d0f7-b89e-4716-b2ab-69493e286660
-    position: {x: 544, y: 296}
-  - nodeName: Dialogue Node
-    guid: 2ff0e102-5190-4b73-952e-ccc9df706e3c
-    position: {x: 894, y: 229}
-  exposedProperties:
-  - propertyName: Character
-    propertyValue: Tomas
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 02a4edc2-4f9b-4e7a-9fb7-d8da0d8d5d70
+    position: {x: 234, y: 191}
+  - type: 1
+    nodeName: Camera Node
+    guid: 5a990308-22e9-4d4a-9e62-59b94b210f59
+    position: {x: 860, y: 191}
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: fd24b3c1-7bb6-442a-9f02-ed8376e7c6e9
+    position: {x: 506, y: 191}
+  exposedProperties: []
