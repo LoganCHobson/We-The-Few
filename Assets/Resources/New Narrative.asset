@@ -15,24 +15,69 @@ MonoBehaviour:
   nodeLinks:
   - baseNodeGuid: 8ad89b71-a3a3-4e40-b1d5-a6f36d35b021
     portName: Next
-    targetNodeGuid: 02a4edc2-4f9b-4e7a-9fb7-d8da0d8d5d70
-  - baseNodeGuid: 02a4edc2-4f9b-4e7a-9fb7-d8da0d8d5d70
-    portName: Test
-    targetNodeGuid: fd24b3c1-7bb6-442a-9f02-ed8376e7c6e9
-  - baseNodeGuid: fd24b3c1-7bb6-442a-9f02-ed8376e7c6e9
+    targetNodeGuid: e0b3f5b3-b4fe-4c69-95ef-c09c17256842
+  - baseNodeGuid: e0b3f5b3-b4fe-4c69-95ef-c09c17256842
     portName: Output
-    targetNodeGuid: 5a990308-22e9-4d4a-9e62-59b94b210f59
+    targetNodeGuid: 565070dc-b4a4-4e94-a729-06fecf92cfbd
+  - baseNodeGuid: 565070dc-b4a4-4e94-a729-06fecf92cfbd
+    portName: Output
+    targetNodeGuid: 56611406-61bb-43bb-a004-50fde7aac4c2
+  - baseNodeGuid: f5aab60c-1198-4f09-bbc2-ea02ed45d733
+    portName: '*Attack*'
+    targetNodeGuid: 6a71773f-f77c-47ce-adfc-e3cc3341b71d
+  - baseNodeGuid: 56611406-61bb-43bb-a004-50fde7aac4c2
+    portName: Output
+    targetNodeGuid: 42635b6c-df83-48c3-b0d5-0077f69a5eba
+  - baseNodeGuid: 42635b6c-df83-48c3-b0d5-0077f69a5eba
+    portName: Output
+    targetNodeGuid: f5aab60c-1198-4f09-bbc2-ea02ed45d733
+  - baseNodeGuid: f5aab60c-1198-4f09-bbc2-ea02ed45d733
+    portName: '*Run*'
+    targetNodeGuid: d48e5243-0908-4954-b4e5-5d268c3932c0
+  - baseNodeGuid: f5aab60c-1198-4f09-bbc2-ea02ed45d733
+    portName: '*Say Nothing*'
+    targetNodeGuid: 76b4c4a3-80d0-4994-b4e9-9f327c5abc0b
+  - baseNodeGuid: f5aab60c-1198-4f09-bbc2-ea02ed45d733
+    portName: '"Warden Toby Of Andros."'
+    targetNodeGuid: a2f41544-61cb-4e20-9c60-066392719938
+  - baseNodeGuid: a2f41544-61cb-4e20-9c60-066392719938
+    portName: '*Attack*'
+    targetNodeGuid: 6a71773f-f77c-47ce-adfc-e3cc3341b71d
   cutsceneNodeData:
-  - type: 0
-    nodeName: Dialogue Node
-    guid: 02a4edc2-4f9b-4e7a-9fb7-d8da0d8d5d70
-    position: {x: 234, y: 191}
-  - type: 1
-    nodeName: Camera Node
-    guid: 5a990308-22e9-4d4a-9e62-59b94b210f59
-    position: {x: 860, y: 191}
   - type: 2
     nodeName: UnityEvent Node
-    guid: fd24b3c1-7bb6-442a-9f02-ed8376e7c6e9
-    position: {x: 506, y: 191}
+    guid: e0b3f5b3-b4fe-4c69-95ef-c09c17256842
+    position: {x: 224, y: 191}
+  - type: 1
+    nodeName: Camera Node
+    guid: 565070dc-b4a4-4e94-a729-06fecf92cfbd
+    position: {x: 605, y: 191}
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: 56611406-61bb-43bb-a004-50fde7aac4c2
+    position: {x: 991, y: 191}
+  - type: 1
+    nodeName: Camera Node
+    guid: 42635b6c-df83-48c3-b0d5-0077f69a5eba
+    position: {x: 1380, y: 191}
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: d48e5243-0908-4954-b4e5-5d268c3932c0
+    position: {x: 2040, y: 416}
+  - type: 0
+    nodeName: Dialogue Node
+    guid: f5aab60c-1198-4f09-bbc2-ea02ed45d733
+    position: {x: 1742, y: 191}
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 76b4c4a3-80d0-4994-b4e9-9f327c5abc0b
+    position: {x: 2252, y: 370}
+  - type: 0
+    nodeName: Dialogue Node
+    guid: a2f41544-61cb-4e20-9c60-066392719938
+    position: {x: 2252, y: 215}
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: 6a71773f-f77c-47ce-adfc-e3cc3341b71d
+    position: {x: 2744, y: -30}
   exposedProperties: []
