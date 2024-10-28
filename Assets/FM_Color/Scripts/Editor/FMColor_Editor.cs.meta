@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 0b2ffde1c0cdc4b098ce5ede3ba6692e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - skin: {fileID: 11400000, guid: 1b9633a0e21eb4d25b85bc28eef1a3d6, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Scripts/Editor/FMColor_Editor.cs
+  uploadId: 632437

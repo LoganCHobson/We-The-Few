@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: b932b271a27644ad09b5352bcaae3c15
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Scripts/Helper/CreateDefaultLut.cs
+  uploadId: 632437

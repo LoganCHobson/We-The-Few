@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f16246247c22542e688029494c25b646
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Shaders/FMColorShared.cginc
+  uploadId: 632437

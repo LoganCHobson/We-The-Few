@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 7500e52f78c304913b189f0db25fe1f5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Scripts/Helper/DebugLUT.cs
+  uploadId: 632437

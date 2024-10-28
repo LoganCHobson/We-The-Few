@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fa6803c66027b4cc69abb66df061d044
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Scenes/Demo_FMColor_World01Settings.lighting
+  uploadId: 632437

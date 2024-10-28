@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ff8efdd52694d4f0091d5d6e468fac4c
+timeCreated: 1449692211
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Shaders/FMColor.shader
+  uploadId: 632437

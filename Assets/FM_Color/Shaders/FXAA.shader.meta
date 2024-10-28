@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 935232f54c5894b57ad19147233be3ae
+timeCreated: 1517236338
+licenseType: Store
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Shaders/FXAA.shader
+  uploadId: 632437

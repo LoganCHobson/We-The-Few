@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 43fc91795e3834f729206d0ef36079bb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 157989
+  packageName: FM COLOR
+  packageVersion: 1.420
+  assetPath: Assets/FM_Color/Scripts/Core/LutPack.cs
+  uploadId: 632437
