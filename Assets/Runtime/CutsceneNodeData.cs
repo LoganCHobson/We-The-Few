@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,8 +26,14 @@ public class CutsceneNodeData
 
     public UnityEvent unityEvent;
     public string eventName;
-
+    public List<ListenerClass> listenerNames;
 }
+[Serializable]
+public class ListenerClass
+{
+    public string targetName;
+}
+
 
 public enum NodeType
 {

@@ -16,6 +16,8 @@ public class CutsceneGraphView : GraphView
     private NodeSearchWindow searchWindow;
     public Blackboard blackboard;
 
+
+
     public List<ExposedProperty> exposedProperties = new List<ExposedProperty>();
 
     public CutsceneGraphView(EditorWindow editorWindow)
@@ -37,10 +39,10 @@ public class CutsceneGraphView : GraphView
 
     private void AddSearchWindow(EditorWindow window)
     {
-       searchWindow = ScriptableObject.CreateInstance<NodeSearchWindow>();
-       searchWindow.Init(window, this);
+        searchWindow = ScriptableObject.CreateInstance<NodeSearchWindow>();
+        searchWindow.Init(window, this);
 
-       nodeCreationRequest = context => SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
+        nodeCreationRequest = context => SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
     }
 
     public override List<Port> GetCompatiblePorts(Port _startPort, NodeAdapter _adapter)
@@ -107,7 +109,7 @@ public class CutsceneGraphView : GraphView
     #region DialogueNode 
     public void CreateNode(string _nodeName, Vector2 _mousePosition, NodeType type = NodeType.Dialogue)
     {
-        switch(type)
+        switch (type)
         {
             case NodeType.Dialogue:
                 AddElement(CreateDialogueNode(_nodeName, _mousePosition, ""));
@@ -116,13 +118,13 @@ public class CutsceneGraphView : GraphView
                 AddElement(CreateCameraNode(_nodeName, _mousePosition, null, null));
                 break;
             case NodeType.UnityEvent:
-                AddElement(CreateUnityEventNode(_nodeName, _mousePosition));
+                AddElement(CreateUnityEventNode(_nodeName, _mousePosition, null));
                 break;
-            default: 
+            default:
                 AddElement(CreateDialogueNode(_nodeName, _mousePosition, ""));
                 break;
         }
-        
+
     }
 
     public DialogueNode CreateDialogueNode(string _nodeName, Vector2 _position, string _dialogText)
@@ -177,7 +179,7 @@ public class CutsceneGraphView : GraphView
 
         };
 
-        
+
         ObjectField cameraField = new ObjectField
         {
             objectType = typeof(Camera),
@@ -213,7 +215,7 @@ public class CutsceneGraphView : GraphView
 
         return cameraNode;
     }
-    public UnityEventNode CreateUnityEventNode(string _nodeName, Vector2 _position)
+    public UnityEventNode CreateUnityEventNode(string _nodeName, Vector2 _position, UnityEvent _unityEvent)
     {
         UnityEventNode unityEventNode = new UnityEventNode()
         {
@@ -222,8 +224,9 @@ public class CutsceneGraphView : GraphView
             name = _nodeName,
             title = _nodeName,
             guid = Guid.NewGuid().ToString(),
-            unityEvent = new UnityEvent(),
+            unityEvent = _unityEvent,
         };
+
 
         UnityEventNodeWrapper wrapper = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
         wrapper.unityEvent = unityEventNode.unityEvent;
@@ -232,6 +235,33 @@ public class CutsceneGraphView : GraphView
         eventField.bindingPath = "unityEvent";
         eventField.Bind(new SerializedObject(wrapper));
         unityEventNode.mainContainer.Add(eventField);
+        SerializedObject serializedObject = new SerializedObject(wrapper);
+        eventField.RegisterValueChangeCallback(evt =>
+        {
+            serializedObject.ApplyModifiedProperties();
+            unityEventNode.unityEvent = wrapper.unityEvent;
+
+            List<ListenerInfo> updatedListeners = UnityEventUtility.GetListenerInfos(unityEventNode.unityEvent);
+
+
+            foreach (var listener in updatedListeners)
+            {
+                if (listener.Target?.name == null)
+                {
+                    continue;
+                }
+                
+
+                ListenerClass newListener = new ListenerClass
+                {
+
+                    targetName = listener.Target?.name, //If you are here because this is nulling. .  Cry about it loser, just assign your target and it wont null.
+                };
+
+
+                unityEventNode.listenerNames.Add(newListener);
+            }
+        });
 
 
         Port imputPort = AddPort(unityEventNode, Direction.Input, Port.Capacity.Multi);
@@ -298,7 +328,7 @@ public class CutsceneGraphView : GraphView
         string localPropertyName = _exposedProperty.propertyName;
         string localPropertyValue = _exposedProperty.propertyValue;
 
-        while(exposedProperties.Any(property => property.propertyName == localPropertyName))
+        while (exposedProperties.Any(property => property.propertyName == localPropertyName))
         {
             localPropertyName = $"{localPropertyName}(1)";
         }
@@ -315,9 +345,9 @@ public class CutsceneGraphView : GraphView
         container.Add(blackboardField);
 
         TextField propertyValueTextField = new TextField("Value: ")
-        { 
-            value = localPropertyValue, 
-        
+        {
+            value = localPropertyValue,
+
         };
         propertyValueTextField.RegisterValueChangedCallback(evt =>
         {

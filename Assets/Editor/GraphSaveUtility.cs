@@ -1,8 +1,12 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 using static CutsceneNodeData;
 
@@ -97,7 +101,10 @@ public class GraphSaveUtility
                     guid = node.guid,
                     position = node.GetPosition().position,
                     eventName = (node as UnityEventNode).eventName,
-                    unityEvent = (node as UnityEventNode).unityEvent
+                    unityEvent = (node as UnityEventNode).unityEvent,
+                    listenerNames = (node as UnityEventNode).listenerNames
+                    
+
 
                 },
                 _ => null
@@ -174,7 +181,7 @@ public class GraphSaveUtility
             {
                 NodeType.Dialogue => targetGraphView.CreateDialogueNode(nodeData.nodeName, Vector2.zero, nodeData.dialogText),
                 NodeType.Camera => targetGraphView.CreateCameraNode(nodeData.nodeName, Vector2.zero, GameObject.Find(nodeData.cameraName).GetComponent<Camera>(), GameObject.Find(nodeData.focusName)),
-                NodeType.UnityEvent => targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero),
+                NodeType.UnityEvent => targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent),
                 _ => null
             };
 
@@ -195,7 +202,6 @@ public class GraphSaveUtility
         }
     }
 
-
     private void ClearGraph()
     {
         //Set entry points guid back from the save. Discard existing guid. Entry point is always there, gotta clean it.
@@ -215,4 +221,39 @@ public class GraphSaveUtility
             targetGraphView.RemoveElement(node);
         }
     }
+    //This is to fix the issue where we loose the target of the Unity events. Unfortunatly Unity is insanely dumb and we gotta do it this way.
+    public UnityEvent ListenerFixer(List<ListenerClass> listenerNames, UnityEventNode unityEventNode)
+    {
+        List<ListenerInfo> listeners = UnityEventUtility.GetListenerInfos(unityEventNode.unityEvent); //Get all listeners on the event
+
+        unityEventNode.unityEvent.RemoveAllListeners(); //Then get rid of em
+        unityEventNode.listenerNames.Clear();
+        foreach (ListenerInfo listenerInfo in listeners)
+        {
+            MethodInfo methodInfo = listenerInfo.Target?.GetType().GetMethod(listenerInfo.MethodName); //Get method info
+
+            
+            if (listenerInfo.Target == null && methodInfo != null) //If we are missing the target, find it one.
+            {
+                foreach (ListenerClass name in listenerNames)
+                {
+                    GameObject targetObject = GameObject.Find(name.targetName);
+                    if (targetObject != null)
+                    {
+                        
+                        UnityAction action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), targetObject, methodInfo);
+                        unityEventNode.unityEvent.AddListener(action);
+                    }
+                }
+            }
+            else if (methodInfo != null) 
+            {
+                UnityAction action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), listenerInfo.Target, methodInfo);
+                unityEventNode.unityEvent.AddListener(action);
+            }
+        }
+
+        return unityEventNode.unityEvent;
+    }
+
 }

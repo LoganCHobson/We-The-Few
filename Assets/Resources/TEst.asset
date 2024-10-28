@@ -10,38 +10,113 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbab9c76bff1277498afd3fe845c0063, type: 3}
-  m_Name: TEst
+  m_Name: Test
   m_EditorClassIdentifier: 
   nodeLinks:
-  - baseNodeGuid: 3946cac3-a151-4a68-bd45-26802bddcc5e
+  - baseNodeGuid: 087a18c2-3674-4dec-b262-ee233a2871c6
     portName: Next
-    targetNodeGuid: 3068f603-039d-46b4-8a39-9ff3cdcf2f63
-  - baseNodeGuid: 3068f603-039d-46b4-8a39-9ff3cdcf2f63
+    targetNodeGuid: 60519c08-33d8-449b-8382-df0d7b24a54d
+  - baseNodeGuid: 60519c08-33d8-449b-8382-df0d7b24a54d
     portName: Output
-    targetNodeGuid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
-  - baseNodeGuid: e5ffe61f-2468-4665-93b4-adcd93ffdc2f
+    targetNodeGuid: 223dc8d7-6db9-40ed-a6bc-4f54dd8e2d2f
+  - baseNodeGuid: 223dc8d7-6db9-40ed-a6bc-4f54dd8e2d2f
     portName: Output
-    targetNodeGuid: 4d3c693a-1e1d-4c70-9561-4c58ebd1ff35
-  - baseNodeGuid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
-    portName: Test
-    targetNodeGuid: e5ffe61f-2468-4665-93b4-adcd93ffdc2f
+    targetNodeGuid: c7997927-fad3-4f60-a154-777bd7e38903
+  - baseNodeGuid: c7997927-fad3-4f60-a154-777bd7e38903
+    portName: '"Whatever I want" *Attack*'
+    targetNodeGuid: 1b186a3c-b4de-49b0-8778-0b57f1a76b8b
+  - baseNodeGuid: c7997927-fad3-4f60-a154-777bd7e38903
+    portName: '"What am I doing here? What are you doing here?"'
+    targetNodeGuid: b72375ad-46dc-41d2-8391-3f6a7b637fe6
+  - baseNodeGuid: b72375ad-46dc-41d2-8391-3f6a7b637fe6
+    portName: '"Alright enough." *Attack*'
+    targetNodeGuid: 1b186a3c-b4de-49b0-8778-0b57f1a76b8b
+  - baseNodeGuid: b72375ad-46dc-41d2-8391-3f6a7b637fe6
+    portName: '"What am I doing here? What are you doing here?"'
+    targetNodeGuid: 6e28a304-3721-40d4-8702-7af636dfc6f9
+  - baseNodeGuid: c7997927-fad3-4f60-a154-777bd7e38903
+    portName: '"This is Androsian territory!"'
+    targetNodeGuid: 50e282ad-28aa-4090-9efd-2db602814f9c
+  - baseNodeGuid: 50e282ad-28aa-4090-9efd-2db602814f9c
+    portName: '*Battle*'
+    targetNodeGuid: 1b186a3c-b4de-49b0-8778-0b57f1a76b8b
+  - baseNodeGuid: c7997927-fad3-4f60-a154-777bd7e38903
+    portName: '"Just passing through"'
+    targetNodeGuid: 0ccf4322-690d-4a74-9149-b5d37667d362
+  - baseNodeGuid: 0ccf4322-690d-4a74-9149-b5d37667d362
+    portName: '"Cringe. Kys"'
+    targetNodeGuid: 16641711-11b5-46c5-8a6d-356f2adff064
+  - baseNodeGuid: 16641711-11b5-46c5-8a6d-356f2adff064
+    portName: Output
+    targetNodeGuid: 7aac78c4-0738-41d5-9a71-a94a0f2fc7ae
+  - baseNodeGuid: 0ccf4322-690d-4a74-9149-b5d37667d362
+    portName: '"Hell no."'
+    targetNodeGuid: 1b186a3c-b4de-49b0-8778-0b57f1a76b8b
+  - baseNodeGuid: 0ccf4322-690d-4a74-9149-b5d37667d362
+    portName: '"How about you run yours."'
+    targetNodeGuid: 1b186a3c-b4de-49b0-8778-0b57f1a76b8b
   cutsceneNodeData:
-  - type: 1
-    nodeName: Camera Node
-    guid: 3068f603-039d-46b4-8a39-9ff3cdcf2f63
-    position: {x: 255, y: 200}
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: 60519c08-33d8-449b-8382-df0d7b24a54d
+    position: {x: 243, y: 200}
     dialogText: 
-    cameraName: Main Camera
-    focusName: Player
+    cameraName: 
+    focusName: 
     cameraZoomLevel: 0
     unityEvent:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Entry Anim
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Entry Anim
+            m_BoolArgument: 0
+          m_CallState: 2
     eventName: 
+    listenerNames:
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
   - type: 1
     nodeName: Camera Node
-    guid: e5ffe61f-2468-4665-93b4-adcd93ffdc2f
-    position: {x: 900, y: 200}
+    guid: 223dc8d7-6db9-40ed-a6bc-4f54dd8e2d2f
+    position: {x: 616, y: 200}
     dialogText: 
     cameraName: Main Camera
     focusName: Bandit
@@ -50,11 +125,12 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     eventName: 
+    listenerNames: []
   - type: 0
     nodeName: Dialogue Node
-    guid: 9053199f-3d20-4ecb-b896-fd59792fb3c9
-    position: {x: 636, y: 200}
-    dialogText: '"TEST"'
+    guid: c7997927-fad3-4f60-a154-777bd7e38903
+    position: {x: 979, y: 200}
+    dialogText: '"OI GIT! What are you doing out ''ere?!"'
     cameraName: 
     focusName: 
     cameraZoomLevel: 0
@@ -62,11 +138,12 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     eventName: 
+    listenerNames: []
   - type: 0
     nodeName: Dialogue Node
-    guid: 4d3c693a-1e1d-4c70-9561-4c58ebd1ff35
-    position: {x: 1250, y: 200}
-    dialogText: Test2
+    guid: b72375ad-46dc-41d2-8391-3f6a7b637fe6
+    position: {x: 1460, y: 60}
+    dialogText: '"What am I doing here? What are you doing here?"'
     cameraName: 
     focusName: 
     cameraZoomLevel: 0
@@ -74,4 +151,133 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     eventName: 
+    listenerNames: []
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 6e28a304-3721-40d4-8702-7af636dfc6f9
+    position: {x: 1999, y: 60}
+    dialogText: '"What am I doing here? What are you doing here?"'
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 0ccf4322-690d-4a74-9149-b5d37667d362
+    position: {x: 1516, y: 487}
+    dialogText: '"Well while you are here, run thine pockets."'
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 1
+    nodeName: Camera Node
+    guid: 16641711-11b5-46c5-8a6d-356f2adff064
+    position: {x: 1891, y: 535}
+    dialogText: 
+    cameraName: Main Camera
+    focusName: Player
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: 7aac78c4-0738-41d5-9a71-a94a0f2fc7ae
+    position: {x: 2307, y: 535}
+    dialogText: 
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    eventName: 
+    listenerNames:
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 50e282ad-28aa-4090-9efd-2db602814f9c
+    position: {x: 1516, y: 229}
+    dialogText: '"Wait a minute you''re the opps! Get em!"'
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: 1b186a3c-b4de-49b0-8778-0b57f1a76b8b
+    position: {x: 1891, y: 313}
+    dialogText: 
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    eventName: 
+    listenerNames:
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
+    - targetName: GameObject
   exposedProperties: []
