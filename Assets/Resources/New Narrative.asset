@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbab9c76bff1277498afd3fe845c0063, type: 3}
+  m_Name: New Narrative
+  m_EditorClassIdentifier: 
+  nodeLinks:
+  - baseNodeGuid: 14edc3b5-0161-4072-a6c1-834079175d2f
+    portName: Next
+    targetNodeGuid: 4d6e01f3-8b10-4359-8f53-d36d944fed36
+  - baseNodeGuid: 4d6e01f3-8b10-4359-8f53-d36d944fed36
+    portName: How do you do?
+    targetNodeGuid: c15398b9-0772-46f9-a16d-3f952bcf032c
+  - baseNodeGuid: 4d6e01f3-8b10-4359-8f53-d36d944fed36
+    portName: No. No Howdy.
+    targetNodeGuid: 9eff7d3a-e4a2-4fbb-9138-03ca33cafe9a
+  - baseNodeGuid: c15398b9-0772-46f9-a16d-3f952bcf032c
+    portName: No. No Howdy.
+    targetNodeGuid: 52ae2980-60e3-4378-a3a8-e0ee06784f02
+  - baseNodeGuid: c15398b9-0772-46f9-a16d-3f952bcf032c
+    portName: HOWDY
+    targetNodeGuid: cabea1bc-de28-4331-a127-adcfb26df448
+  - baseNodeGuid: 9eff7d3a-e4a2-4fbb-9138-03ca33cafe9a
+    portName: I dont want to.
+    targetNodeGuid: 52ae2980-60e3-4378-a3a8-e0ee06784f02
+  - baseNodeGuid: 9eff7d3a-e4a2-4fbb-9138-03ca33cafe9a
+    portName: Im sorry. Howdy.
+    targetNodeGuid: cabea1bc-de28-4331-a127-adcfb26df448
+  - baseNodeGuid: 52ae2980-60e3-4378-a3a8-e0ee06784f02
+    portName: Continue
+    targetNodeGuid: 4d6e01f3-8b10-4359-8f53-d36d944fed36
+  - baseNodeGuid: cabea1bc-de28-4331-a127-adcfb26df448
+    portName: Continue
+    targetNodeGuid: 4d6e01f3-8b10-4359-8f53-d36d944fed36
+  cutsceneNodeData:
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 4d6e01f3-8b10-4359-8f53-d36d944fed36
+    position: {x: 233, y: 200}
+    dialogText: Howdy!
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 0
+    nodeName: Dialogue Node
+    guid: c15398b9-0772-46f9-a16d-3f952bcf032c
+    position: {x: 532, y: 152}
+    dialogText: No, you have to say Howdy!
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 9eff7d3a-e4a2-4fbb-9138-03ca33cafe9a
+    position: {x: 534, y: 296}
+    dialogText: :( Why?
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 0
+    nodeName: Dialogue Node
+    guid: 52ae2980-60e3-4378-a3a8-e0ee06784f02
+    position: {x: 899, y: 229}
+    dialogText: :(
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  - type: 0
+    nodeName: Dialogue Node
+    guid: cabea1bc-de28-4331-a127-adcfb26df448
+    position: {x: 880, y: 121}
+    dialogText: :D
+    cameraName: 
+    focusName: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    eventName: 
+    listenerNames: []
+  exposedProperties: []
