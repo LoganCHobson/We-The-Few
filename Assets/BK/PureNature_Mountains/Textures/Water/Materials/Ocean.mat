@@ -187,7 +187,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RefractionPower: 1.54
+    - _RefractionPower: 2.48
     - _SmoothnessPower: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -206,9 +206,9 @@ Material:
     - _WaterSmoothness: 0
     - _WaterSpecular: 0
     - _WaterSpeed: 0
-    - _WavesHeight: 0.05
+    - _WavesHeight: 0.08
     - _WavesScale: 5
-    - _WavesSpeed: 15
+    - _WavesSpeed: 10
     - _WavesTiling: 0.5
     - _ZWrite: 1
     - __dirty: 0
@@ -237,3 +237,4 @@ Material:
     - _WavesScaleOLD: {r: 1, g: 1, b: 0, a: 0}
     - _WavesScaleXY: {r: 0.1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
