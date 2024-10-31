@@ -380,7 +380,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 			sampler2D _FoamMask;
 			sampler2D _NormalMap;
 
@@ -1212,7 +1212,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -1608,7 +1608,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -1976,7 +1976,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 			sampler2D _FoamMask;
 			sampler2D _NormalMap;
 
@@ -2535,7 +2535,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 			sampler2D _FoamMask;
 			sampler2D _NormalMap;
 
@@ -3088,7 +3088,7 @@ Shader "BK/Water"
 			#endif
 
 			sampler2D _NormalMap;
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -3557,7 +3557,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 			sampler2D _FoamMask;
 			sampler2D _NormalMap;
 
@@ -4233,7 +4233,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
@@ -4566,7 +4566,7 @@ Shader "BK/Water"
 				int _PassValue;
 			#endif
 
-			uniform float4 _CameraDepthTexture_TexelSize;
+			
 
 
 			float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
