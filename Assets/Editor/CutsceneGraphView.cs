@@ -255,7 +255,7 @@ public class CutsceneGraphView : GraphView
                 ListenerClass newListener = new ListenerClass
                 {
 
-                    targetName = listener.Target?.name, //If you are here because this is nulling. .  Cry about it loser, just assign your target and it wont null.
+                    targetGuid = ((listener.Target as GameObject)?.GetComponent<GUIDComponent>()?.guid), //If you are here because this is nulling. .  Cry about it loser, just assign your target and it wont null.
                 };
 
 

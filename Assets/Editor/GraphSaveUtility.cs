@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,7 +7,6 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
-using static CutsceneNodeData;
 
 public class GraphSaveUtility
 {
@@ -80,7 +78,7 @@ public class GraphSaveUtility
                     nodeName = node.name,
                     guid = node.guid,
                     position = node.GetPosition().position,
-                    dialogText = (node as DialogueNode).dialogText 
+                    dialogText = (node as DialogueNode).dialogText
                 }
                 ,
                 NodeType.Camera => new CutsceneNodeData
@@ -90,8 +88,8 @@ public class GraphSaveUtility
                     guid = node.guid,
                     position = node.GetPosition().position,
                     cameraZoomLevel = (node as CameraNode).cameraZoomLevel,
-                    cameraName = (node as CameraNode).camera?.name, // Save only the name
-                    focusName = (node as CameraNode).focus.name,
+                    cameraGuid = (node as CameraNode).camera?.GetComponent<GUIDComponent>().guid, // Save only the name
+                    focusGuid = (node as CameraNode).focus.GetComponent<GUIDComponent>().guid,
                 },
 
                 NodeType.UnityEvent => new CutsceneNodeData
@@ -102,8 +100,8 @@ public class GraphSaveUtility
                     position = node.GetPosition().position,
                     eventName = (node as UnityEventNode).eventName,
                     unityEvent = (node as UnityEventNode).unityEvent,
-                    listenerNames = (node as UnityEventNode).listenerNames
-                    
+                    listenerGuids = (node as UnityEventNode).listenerNames
+
 
 
                 },
@@ -180,7 +178,7 @@ public class GraphSaveUtility
             CutsceneNode tempNode = nodeData.type switch
             {
                 NodeType.Dialogue => targetGraphView.CreateDialogueNode(nodeData.nodeName, Vector2.zero, nodeData.dialogText),
-                NodeType.Camera => targetGraphView.CreateCameraNode(nodeData.nodeName, Vector2.zero, GameObject.Find(nodeData.cameraName).GetComponent<Camera>(), GameObject.Find(nodeData.focusName)),
+                NodeType.Camera => targetGraphView.CreateCameraNode(nodeData.nodeName, Vector2.zero, UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.guid == nodeData.cameraGuid)?.GetComponent<Camera>(), UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.guid == nodeData.focusGuid)?.gameObject),
                 NodeType.UnityEvent => targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent),
                 _ => null
             };
@@ -226,27 +224,30 @@ public class GraphSaveUtility
     {
         List<ListenerInfo> listeners = UnityEventUtility.GetListenerInfos(unityEventNode.unityEvent); //Get all listeners on the event
 
-        unityEventNode.unityEvent.RemoveAllListeners(); //Then get rid of em
+        unityEventNode.unityEvent.RemoveAllListeners(); //Clear em
         unityEventNode.listenerNames.Clear();
+
         foreach (ListenerInfo listenerInfo in listeners)
         {
-            MethodInfo methodInfo = listenerInfo.Target?.GetType().GetMethod(listenerInfo.MethodName); //Get method info
+            MethodInfo methodInfo = listenerInfo.Target?.GetType().GetMethod(listenerInfo.MethodName); 
 
-            
-            if (listenerInfo.Target == null && methodInfo != null) //If we are missing the target, find it one.
+            if (listenerInfo.Target == null && methodInfo != null) 
             {
                 foreach (ListenerClass name in listenerNames)
                 {
-                    GameObject targetObject = GameObject.Find(name.targetName);
-                    if (targetObject != null)
+                    GUIDComponent guidComponent = GameObject.FindObjectsOfType<GUIDComponent>()
+                        .FirstOrDefault(g => g.guid == name.targetGuid);
+
+                    if (guidComponent != null)
                     {
-                        
+                        GameObject targetObject = guidComponent.gameObject;
+
                         UnityAction action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), targetObject, methodInfo);
                         unityEventNode.unityEvent.AddListener(action);
                     }
                 }
             }
-            else if (methodInfo != null) 
+            else if (methodInfo != null)
             {
                 UnityAction action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), listenerInfo.Target, methodInfo);
                 unityEventNode.unityEvent.AddListener(action);

@@ -18,20 +18,20 @@ public class CutsceneNodeData
 
 
 
-    public string cameraName;
-    public string focusName;
+    public string cameraGuid;
+    public string focusGuid;
     public float cameraZoomLevel;
 
 
 
     public UnityEvent unityEvent;
     public string eventName;
-    public List<ListenerClass> listenerNames;
+    public List<ListenerClass> listenerGuids;
 }
 [Serializable]
 public class ListenerClass
 {
-    public string targetName;
+    public string targetGuid;
 }
 
 
