@@ -38,6 +38,11 @@ public class NodeSearchWindow : ScriptableObject, ISearchWindowProvider
             new SearchTreeEntry(new GUIContent("UnityEvent Node", indentation))
             {
                 userData = new UnityEventNode(), level = 2
+            },
+            new SearchTreeGroupEntry(new GUIContent("Utility"), 1),
+            new SearchTreeEntry(new GUIContent("Delay Node", indentation))
+            {
+                userData = new DelayNode(), level = 2
             }
 
         };
@@ -60,6 +65,9 @@ public class NodeSearchWindow : ScriptableObject, ISearchWindowProvider
 
             case UnityEventNode unityEventNode:
                 graphView.CreateNode("UnityEvent Node", localMousePosition, NodeType.UnityEvent);
+                return true;
+            case DelayNode delayNode:
+                graphView.CreateNode("Delay Node", localMousePosition, NodeType.Delay);
                 return true;
 
 

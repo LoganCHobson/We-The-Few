@@ -79,8 +79,7 @@ public class GraphSaveUtility
                     guid = node.guid,
                     position = node.GetPosition().position,
                     dialogText = (node as DialogueNode).dialogText
-                }
-                ,
+                },
                 NodeType.Camera => new CutsceneNodeData
                 {
                     type = node.type,
@@ -104,6 +103,14 @@ public class GraphSaveUtility
 
 
 
+                },
+                NodeType.Delay => new CutsceneNodeData
+                {
+                    type = node.type,
+                    nodeName = node.name,
+                    guid = node.guid,
+                    position = node.GetPosition().position,
+                    delay = (node as DelayNode).delay
                 },
                 _ => null
             };
@@ -180,6 +187,7 @@ public class GraphSaveUtility
                 NodeType.Dialogue => targetGraphView.CreateDialogueNode(nodeData.nodeName, Vector2.zero, nodeData.dialogText),
                 NodeType.Camera => targetGraphView.CreateCameraNode(nodeData.nodeName, Vector2.zero, UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.guid == nodeData.cameraGuid)?.GetComponent<Camera>(), UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.guid == nodeData.focusGuid)?.gameObject),
                 NodeType.UnityEvent => targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent),
+                NodeType.Delay => targetGraphView.CreateDelayNode(nodeData.nodeName, Vector2.zero, nodeData.delay),
                 _ => null
             };
 

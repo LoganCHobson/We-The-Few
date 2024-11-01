@@ -120,6 +120,9 @@ public class CutsceneGraphView : GraphView
             case NodeType.UnityEvent:
                 AddElement(CreateUnityEventNode(_nodeName, _mousePosition, null));
                 break;
+            case NodeType.Delay:
+                AddElement(CreateDelayNode(_nodeName, _mousePosition, 0f));
+                break;
             default:
                 AddElement(CreateDialogueNode(_nodeName, _mousePosition, ""));
                 break;
@@ -248,7 +251,7 @@ public class CutsceneGraphView : GraphView
             {
                 if (listener.Target?.name == null)
                 {
-                    continue;
+                    return;
                 }
                 
 
@@ -279,6 +282,52 @@ public class CutsceneGraphView : GraphView
         unityEventNode.SetPosition(new Rect(_position, defaultNodeSize));
 
         return unityEventNode;
+    }
+
+    public DelayNode CreateDelayNode(string _nodeName, Vector2 _position, float _delay)
+    {
+        DelayNode delayNode = new DelayNode()
+        {
+            type = NodeType.Delay,
+            name = _nodeName,
+            title = _nodeName,
+            delay = _delay,
+            guid = Guid.NewGuid().ToString(),
+
+        };
+
+        Port imputPort = AddPort(delayNode, Direction.Input, Port.Capacity.Multi);
+        imputPort.portName = "Input";
+        delayNode.inputContainer.Add(imputPort);
+        Port outputPort = AddPort(delayNode, Direction.Output, Port.Capacity.Multi);
+        outputPort.portName = "Output";
+        delayNode.outputContainer.Add(outputPort);
+        delayNode.styleSheets.Add(Resources.Load<StyleSheet>("DelayColor"));
+
+       
+
+        TextField textField = new TextField(string.Empty);
+        textField.RegisterValueChangedCallback(evt =>
+        {
+            if (float.TryParse(evt.newValue, out float result))
+            {
+                delayNode.delay = result; 
+            }
+            else
+            {
+                
+                textField.value = delayNode.delay.ToString(); 
+                Debug.LogWarning("Invalid input. Please enter a valid number.");
+            }
+        });
+        textField.SetValueWithoutNotify(delayNode.delay.ToString());
+        delayNode.mainContainer.Add(textField);
+
+        delayNode.RefreshExpandedState();
+        delayNode.RefreshPorts();
+        delayNode.SetPosition(new Rect(_position, defaultNodeSize));
+
+        return delayNode;
     }
 
 

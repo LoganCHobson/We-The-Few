@@ -27,6 +27,9 @@ public class CutsceneNodeData
     public UnityEvent unityEvent;
     public string eventName;
     public List<ListenerClass> listenerGuids;
+
+
+    public float delay;
 }
 [Serializable]
 public class ListenerClass
@@ -40,4 +43,5 @@ public enum NodeType
     Dialogue,
     Camera,
     UnityEvent,
+    Delay,
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -34,12 +35,13 @@ public class DialogueParser : MonoBehaviour
                 DialogueNodeRun(_narrativeDataGUID, nodeData);
                 break;
             case NodeType.Camera:
-                // Handle Camera node functionality
                 CameraNodeRun(_narrativeDataGUID, nodeData);
                 break;
             case NodeType.UnityEvent:
-                // Handle UnityEvent functionality
                 UnityEventNodeRun(_narrativeDataGUID, nodeData);
+                break;
+            case NodeType.Delay:
+                DelayNodeRun(_narrativeDataGUID, nodeData);
                 break;
             default:
                 Debug.LogError($"Unknown NodeType: {nodeData.type}");
@@ -93,7 +95,27 @@ public class DialogueParser : MonoBehaviour
         {
             ProceedToNarrative(choice.targetNodeGuid);
         }
+
+
     }
+    private void DelayNodeRun(string _narrativeDataGUID, CutsceneNodeData _nodeData)
+    {
+        float delay = container.cutsceneNodeData.Find(x => x.guid == _narrativeDataGUID).delay;
+
+        StartCoroutine(DelayCoroutine(delay, _narrativeDataGUID));
+    }
+
+    private IEnumerator DelayCoroutine(float delay, string _narrativeDataGUID)
+    {
+        yield return new WaitForSeconds(delay);
+
+        var choices = container.nodeLinks.Where(x => x.baseNodeGuid == _narrativeDataGUID);
+        foreach (NodeLinkData choice in choices)
+        {
+            ProceedToNarrative(choice.targetNodeGuid);
+        }
+    }
+
 
     private string ProcessProperties(string text)
     {

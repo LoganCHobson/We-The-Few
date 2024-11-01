@@ -11,6 +11,8 @@ public static class SceneRuleGuid
 
     private static void OnHierarchyChanged()
     {
+        if (EditorApplication.isPlaying)
+            return;
         GameObject[] allGameObjects = GameObject.FindObjectsOfType<GameObject>();
 
         foreach (var gameObject in allGameObjects)
