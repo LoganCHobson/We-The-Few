@@ -24,18 +24,16 @@ public class CutsceneNodeData
 
 
 
-    public UnityEvent unityEvent;
+    [SerializeField] public UnityEvent unityEvent = new UnityEvent();
+    public List<string> listenerGuids = new List<string>();
+    public List<string> methodNames = new List<string>();
     public string eventName;
-    public List<ListenerClass> listenerGuids;
 
 
     public float delay;
 }
-[Serializable]
-public class ListenerClass
-{
-    public string targetGuid;
-}
+
+
 
 
 public enum NodeType

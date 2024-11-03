@@ -4,7 +4,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class GUIDComponent : MonoBehaviour
 {
-     public string guid;
+    [SerializeField] private string guid;
+    public string GUID => guid;
 
     private void Awake()
     {
