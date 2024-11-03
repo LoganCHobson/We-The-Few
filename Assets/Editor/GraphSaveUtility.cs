@@ -70,6 +70,11 @@ public class GraphSaveUtility
 
         foreach (CutsceneNode node in nodes.Where(node => !node.entryPoint))
         {
+            if (node is UnityEventNode unityEventNode)
+            {
+                unityEventNode.ExtractListeners();
+            }
+
             CutsceneNodeData nodeData = node.type switch
             {
                 NodeType.Dialogue => new CutsceneNodeData
@@ -195,9 +200,7 @@ public class GraphSaveUtility
                     break;
 
                 case NodeType.UnityEvent:
-                    var unityEventNode = targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent);
-                    unityEventNode.listenerGuids = nodeData.listenerGuids;
-                    unityEventNode.methodNames = nodeData.methodNames;
+                    var unityEventNode = targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent, nodeData.listenerGuids, nodeData.methodNames);
                     unityEventNode.RebuildListeners();
                     tempNode = unityEventNode;
                     break;
@@ -225,6 +228,8 @@ public class GraphSaveUtility
     }
 
 
+
+
     private void ClearGraph()
     {
         //Set entry points guid back from the save. Discard existing guid. Entry point is always there, gotta clean it.
@@ -247,7 +252,6 @@ public class GraphSaveUtility
     //This is to fix the issue where we loose the target of the Unity events. Unfortunatly Unity is insanely dumb and we gotta do it this way.
     public UnityEvent ListenerFixer(List<string> listenerGuids, List<string> methodNames, UnityEvent unityEvent)
     {
-        // Clear existing listeners to avoid duplicates
         unityEvent.RemoveAllListeners();
 
         for (int i = 0; i < listenerGuids.Count; i++)
@@ -255,15 +259,17 @@ public class GraphSaveUtility
             GameObject target = GameObject.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == listenerGuids[i])?.gameObject;
             if (target != null)
             {
-                // Use reflection to get the method by name
-                MethodInfo methodInfo = target.GetComponent(target.GetType()).GetType().GetMethod(methodNames[i], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (methodInfo != null)
+                var component = target.GetComponent(target.GetType());
+                if (component != null)
                 {
-                    // Create a UnityAction delegate for the method and target
-                    UnityAction action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, methodInfo);
-                    if (action != null)
+                    var methodInfo = component.GetType().GetMethod(methodNames[i], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    if (methodInfo != null)
                     {
-                        unityEvent.AddListener(action);
+                        UnityAction action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, methodInfo);
+                        if (action != null)
+                        {
+                            unityEvent.AddListener(action);
+                        }
                     }
                 }
             }
@@ -271,5 +277,6 @@ public class GraphSaveUtility
 
         return unityEvent;
     }
+
 
 }

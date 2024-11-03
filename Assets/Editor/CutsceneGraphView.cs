@@ -218,40 +218,37 @@ public class CutsceneGraphView : GraphView
 
         return cameraNode;
     }
-    public UnityEventNode CreateUnityEventNode(string _nodeName, Vector2 _position, UnityEvent _unityEvent)
+    public UnityEventNode CreateUnityEventNode(string _nodeName, Vector2 _position, UnityEvent _unityEvent, List<string> listenerGuids = null, List<string> methodNames = null)
     {
-        UnityEventNode unityEventNode = new UnityEventNode()
+        UnityEventNode unityEventNode = new UnityEventNode
         {
             eventName = "",
             type = NodeType.UnityEvent,
             name = _nodeName,
             title = _nodeName,
             guid = Guid.NewGuid().ToString(),
-            unityEvent = _unityEvent,
+            unityEvent = _unityEvent ?? new UnityEvent(), // Ensure we pass the correct instance
+            listenerGuids = listenerGuids ?? new List<string>(),
+            methodNames = methodNames ?? new List<string>(),
         };
 
+        UnityEventNodeWrapper wrapper = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
+        wrapper.unityEvent = unityEventNode.unityEvent;
 
-
-
-        UnityEventNodeWrapper unityEvent = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
-        unityEvent.unityEvent = _unityEvent;
-
-        
         var eventField = new PropertyField();
         eventField.bindingPath = "unityEvent";
-        eventField.Bind(new SerializedObject(unityEvent));
+        eventField.Bind(new SerializedObject(wrapper));
         unityEventNode.mainContainer.Add(eventField);
 
+        Port inputPort = AddPort(unityEventNode, Direction.Input, Port.Capacity.Multi);
+        inputPort.portName = "Input";
+        unityEventNode.inputContainer.Add(inputPort);
 
-        Port imputPort = AddPort(unityEventNode, Direction.Input, Port.Capacity.Multi);
-        imputPort.portName = "Input";
-        unityEventNode.inputContainer.Add(imputPort);
         Port outputPort = AddPort(unityEventNode, Direction.Output, Port.Capacity.Multi);
         outputPort.portName = "Output";
         unityEventNode.outputContainer.Add(outputPort);
+
         unityEventNode.styleSheets.Add(Resources.Load<StyleSheet>("UnityEventColor"));
-
-
 
         unityEventNode.RefreshPorts();
         unityEventNode.RefreshExpandedState();
@@ -259,6 +256,7 @@ public class CutsceneGraphView : GraphView
 
         return unityEventNode;
     }
+
 
     public DelayNode CreateDelayNode(string _nodeName, Vector2 _position, float _delay)
     {

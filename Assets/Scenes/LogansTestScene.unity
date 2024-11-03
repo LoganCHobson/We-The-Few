@@ -5253,7 +5253,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c176136b3ef006a45a4362940b1437c0, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: c176136b3ef006a45a4362940b1437c0, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -5486,7 +5486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441c4f7c3d328c544b20a74e94ac281b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 11400000, guid: b4fd6e34e8132d949ba1a094e9ad3ecb, type: 2}
+  container: {fileID: 0}
   dialogueText: {fileID: 1604931240}
   choicePrefab: {fileID: 756498756629377158, guid: 458d7efb1a8d03345ae5cbf113c1af40, type: 3}
   buttonContainer: {fileID: 1874115186}

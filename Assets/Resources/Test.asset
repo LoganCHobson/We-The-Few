@@ -13,20 +13,14 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   nodeLinks:
-  - baseNodeGuid: 2dea38af-86c5-4e10-a065-2e3363bd0639
+  - baseNodeGuid: a0bf6f95-993d-4237-a883-08b25c95b9de
     portName: Next
-    targetNodeGuid: 987ac59a-90ed-4187-ab7a-c497f8c52f0d
-  - baseNodeGuid: 987ac59a-90ed-4187-ab7a-c497f8c52f0d
-    portName: Output
-    targetNodeGuid: ba92ee7f-d718-4e48-a6ad-c6a36a07d87b
-  - baseNodeGuid: ba92ee7f-d718-4e48-a6ad-c6a36a07d87b
-    portName: Output
-    targetNodeGuid: f5bcba79-ea0a-4f54-ad48-900cc5f8b6b9
+    targetNodeGuid: f338f2f9-ad71-4df9-9405-f1fe4271ccff
   cutsceneNodeData:
   - type: 2
     nodeName: UnityEvent Node
-    guid: 987ac59a-90ed-4187-ab7a-c497f8c52f0d
-    position: {x: 208, y: 200}
+    guid: f338f2f9-ad71-4df9-9405-f1fe4271ccff
+    position: {x: 223.2, y: 200.8}
     dialogText: 
     cameraGuid: 
     focusGuid: 
@@ -34,18 +28,6 @@ MonoBehaviour:
     unityEvent:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Play
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
           m_MethodName: Play
@@ -58,50 +40,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    listenerGuids: []
-    methodNames: []
-    eventName: 
-    delay: 0
-  - type: 2
-    nodeName: UnityEvent Node
-    guid: ba92ee7f-d718-4e48-a6ad-c6a36a07d87b
-    position: {x: 621.6, y: 200.8}
-    dialogText: 
-    cameraGuid: 
-    focusGuid: 
-    cameraZoomLevel: 0
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-          m_MethodName: Play
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: Float
-            m_BoolArgument: 0
-          m_CallState: 2
-    listenerGuids: []
-    methodNames: []
-    eventName: 
-    delay: 0
-  - type: 0
-    nodeName: Dialogue Node
-    guid: f5bcba79-ea0a-4f54-ad48-900cc5f8b6b9
-    position: {x: 1016, y: 195.20001}
-    dialogText: TEst
-    cameraGuid: 
-    focusGuid: 
-    cameraZoomLevel: 0
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls: []
-    listenerGuids: []
-    methodNames: []
+    listenerGuids:
+    - 4ae9ad3a-1f64-4d9a-b622-37209e0c410c
+    methodNames:
+    - Play
     eventName: 
     delay: 0
   exposedProperties: []
