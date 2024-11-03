@@ -231,40 +231,16 @@ public class CutsceneGraphView : GraphView
         };
 
 
-        UnityEventNodeWrapper wrapper = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
-        wrapper.unityEvent = unityEventNode.unityEvent;
 
-        PropertyField eventField = new PropertyField();
+
+        UnityEventNodeWrapper unityEvent = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
+        unityEvent.unityEvent = _unityEvent;
+
+        
+        var eventField = new PropertyField();
         eventField.bindingPath = "unityEvent";
-        eventField.Bind(new SerializedObject(wrapper));
+        eventField.Bind(new SerializedObject(unityEvent));
         unityEventNode.mainContainer.Add(eventField);
-        SerializedObject serializedObject = new SerializedObject(wrapper);
-        eventField.RegisterValueChangeCallback(evt =>
-        {
-            serializedObject.ApplyModifiedProperties();
-            unityEventNode.unityEvent = wrapper.unityEvent;
-
-            List<ListenerInfo> updatedListeners = UnityEventUtility.GetListenerInfos(unityEventNode.unityEvent);
-
-
-            foreach (var listener in updatedListeners)
-            {
-                if (listener.Target?.name == null)
-                {
-                    return;
-                }
-                
-
-                ListenerClass newListener = new ListenerClass
-                {
-
-                    targetGuid = ((listener.Target as GameObject)?.GetComponent<GUIDComponent>()?.guid), //If you are here because this is nulling. .  Cry about it loser, just assign your target and it wont null.
-                };
-
-
-                unityEventNode.listenerNames.Add(newListener);
-            }
-        });
 
 
         Port imputPort = AddPort(unityEventNode, Direction.Input, Port.Capacity.Multi);

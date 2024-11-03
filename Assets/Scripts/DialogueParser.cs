@@ -76,8 +76,8 @@ public class DialogueParser : MonoBehaviour
 
     private void CameraNodeRun(string _narrativeDataGUID, CutsceneNodeData _nodeData)
     {
-        Camera camera = UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.guid == _nodeData.cameraGuid)?.GetComponent<Camera>();
-        GameObject focus = UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.guid == _nodeData.focusGuid)?.gameObject;
+        Camera camera = UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == _nodeData.cameraGuid)?.GetComponent<Camera>();
+        GameObject focus = UnityEngine.Object.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == _nodeData.focusGuid)?.gameObject;
         camera.transform.LookAt(focus.transform);
         var choices = container.nodeLinks.Where(x => x.baseNodeGuid == _narrativeDataGUID);
         foreach (NodeLinkData choice in choices)
