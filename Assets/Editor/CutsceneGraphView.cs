@@ -232,9 +232,17 @@ public class CutsceneGraphView : GraphView
             methodNames = methodNames ?? new List<string>(),
         };
 
-        UnityEventNodeWrapper wrapper = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
-        wrapper.unityEvent = unityEventNode.unityEvent;
+        if (_unityEvent == null)
+        {
+            _unityEvent = new UnityEvent();
+        }
 
+
+        UnityEventNodeWrapper unityEvent = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
+        unityEvent.unityEvent = _unityEvent;
+        unityEventNode.unityEvent = _unityEvent;
+
+        
         var eventField = new PropertyField();
         eventField.bindingPath = "unityEvent";
         eventField.Bind(new SerializedObject(wrapper));

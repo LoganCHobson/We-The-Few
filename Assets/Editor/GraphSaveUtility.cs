@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -70,11 +71,7 @@ public class GraphSaveUtility
 
         foreach (CutsceneNode node in nodes.Where(node => !node.entryPoint))
         {
-            if (node is UnityEventNode unityEventNode)
-            {
-                unityEventNode.ExtractListeners();
-            }
-
+            if (node is UnityEventNode unityEventNode) { unityEventNode.ExtractListeners(); }
             CutsceneNodeData nodeData = node.type switch
             {
                 NodeType.Dialogue => new CutsceneNodeData
@@ -105,7 +102,8 @@ public class GraphSaveUtility
                     eventName = (node as UnityEventNode).eventName,
                     unityEvent = (node as UnityEventNode).unityEvent,
                     listenerGuids = (node as UnityEventNode).listenerGuids,
-                    methodNames = (node as UnityEventNode).methodNames
+                    methodNames = (node as UnityEventNode).methodNames,
+                    parameterTypes = (node as UnityEventNode).parameterTypes,
                 },
                 NodeType.Delay => new CutsceneNodeData
                 {
@@ -200,7 +198,10 @@ public class GraphSaveUtility
                     break;
 
                 case NodeType.UnityEvent:
-                    var unityEventNode = targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent, nodeData.listenerGuids, nodeData.methodNames);
+                    var unityEventNode = targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent);
+                    unityEventNode.listenerGuids = nodeData.listenerGuids;
+                    unityEventNode.methodNames = nodeData.methodNames;
+                    unityEventNode.parameterTypes = nodeData.parameterTypes;
                     unityEventNode.RebuildListeners();
                     tempNode = unityEventNode;
                     break;
@@ -250,7 +251,7 @@ public class GraphSaveUtility
         }
     }
     //This is to fix the issue where we loose the target of the Unity events. Unfortunatly Unity is insanely dumb and we gotta do it this way.
-    public UnityEvent ListenerFixer(List<string> listenerGuids, List<string> methodNames, UnityEvent unityEvent)
+    public UnityEvent ListenerFixer(List<string> listenerGuids, List<string> methodNames, List<Type[]> parameterTypes, UnityEvent unityEvent)
     {
         unityEvent.RemoveAllListeners();
 
@@ -259,24 +260,48 @@ public class GraphSaveUtility
             GameObject target = GameObject.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == listenerGuids[i])?.gameObject;
             if (target != null)
             {
-                var component = target.GetComponent(target.GetType());
-                if (component != null)
+                bool methodFound = false;
+
+                foreach (var component in target.GetComponents<Component>())
                 {
-                    var methodInfo = component.GetType().GetMethod(methodNames[i], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    var methodInfo = component.GetType().GetMethod(
+                        methodNames[i],
+                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+                        null,
+                        parameterTypes[i],
+                        null
+                    );
+
                     if (methodInfo != null)
                     {
-                        UnityAction action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, methodInfo);
+                        var delegateType = Expression.GetActionType(parameterTypes[i].Append(typeof(void)).ToArray());
+                        var action = Delegate.CreateDelegate(delegateType, component, methodInfo);
+
                         if (action != null)
                         {
-                            unityEvent.AddListener(action);
+                            unityEvent.AddListener((UnityAction)action);
+                            methodFound = true;
+                            Debug.Log($"Listener fixed: {component.GetType().Name}.{methodNames[i]} on {target.name}");
+                            break;
                         }
                     }
                 }
+
+                if (!methodFound)
+                {
+                    Debug.LogWarning($"Method not found: {methodNames[i]} on any component of {target.name}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Target not found for GUID: {listenerGuids[i]}");
             }
         }
 
         return unityEvent;
     }
+
+
 
 
 }

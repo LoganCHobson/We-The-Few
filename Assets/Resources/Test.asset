@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   nodeLinks:
-  - baseNodeGuid: a0bf6f95-993d-4237-a883-08b25c95b9de
+  - baseNodeGuid: 391ac58e-5384-42e0-b98a-9277eb0959d6
     portName: Next
-    targetNodeGuid: f338f2f9-ad71-4df9-9405-f1fe4271ccff
+    targetNodeGuid: 3c107f48-104c-40b9-ba8d-c73b3d47f0a8
   cutsceneNodeData:
   - type: 2
     nodeName: UnityEvent Node
-    guid: f338f2f9-ad71-4df9-9405-f1fe4271ccff
-    position: {x: 223.2, y: 200.8}
+    guid: 3c107f48-104c-40b9-ba8d-c73b3d47f0a8
+    position: {x: 219.2, y: 195.20001}
     dialogText: 
     cameraGuid: 
     focusGuid: 
@@ -28,6 +28,18 @@ MonoBehaviour:
     unityEvent:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Float
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
           m_MethodName: Play
@@ -41,8 +53,10 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
     listenerGuids:
+    - da34871f-de8d-4970-a816-0af6432e8382
     - 4ae9ad3a-1f64-4d9a-b622-37209e0c410c
     methodNames:
+    - Play
     - Play
     eventName: 
     delay: 0

@@ -27,6 +27,7 @@ public class CutsceneNodeData
     [SerializeField] public UnityEvent unityEvent = new UnityEvent();
     public List<string> listenerGuids = new List<string>();
     public List<string> methodNames = new List<string>();
+    public List<Type[]> parameterTypes = new List<Type[]>();
     public string eventName;
 
 
