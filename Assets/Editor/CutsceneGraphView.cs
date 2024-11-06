@@ -230,11 +230,15 @@ public class CutsceneGraphView : GraphView
             unityEvent = _unityEvent,
         };
 
-
+        if (_unityEvent == null)
+        {
+            _unityEvent = new UnityEvent();
+        }
 
 
         UnityEventNodeWrapper unityEvent = ScriptableObject.CreateInstance<UnityEventNodeWrapper>();
         unityEvent.unityEvent = _unityEvent;
+        unityEventNode.unityEvent = _unityEvent;
 
         
         var eventField = new PropertyField();
