@@ -10,12 +10,10 @@ using UnityEngine.Events;
 
 public class UnityEventNode : CutsceneNode
 {
-    [SerializeField] public UnityEvent unityEvent;
-    public List<string> listenerGuids = new List<string>();
-    public List<string> methodNames = new List<string>();
-    public List<Type[]> parameterTypes = new List<Type[]>();
+    [SerializeField]
+    public UnityEvent unityEvent = new UnityEvent();
+    public List<ListenerData> listeners = new List<ListenerData>();
     public string eventName;
-
 
     public UnityEventNode()
     {
@@ -24,11 +22,10 @@ public class UnityEventNode : CutsceneNode
             unityEvent = new UnityEvent();
         }
     }
+
     public void ExtractListeners()
     {
-        listenerGuids.Clear();
-        methodNames.Clear();
-        parameterTypes.Clear();
+        listeners.Clear();
 
         if (unityEvent == null)
         {
@@ -36,10 +33,10 @@ public class UnityEventNode : CutsceneNode
             return;
         }
 
-        var listeners = unityEvent.GetPersistentEventCount();
-        Debug.Log($"Listeners count: {listeners}");
+        var listenerCount = unityEvent.GetPersistentEventCount();
+        Debug.Log($"Listeners count: {listenerCount}");
 
-        for (int i = 0; i < listeners; i++)
+        for (int i = 0; i < listenerCount; i++)
         {
             var target = unityEvent.GetPersistentTarget(i);
             if (target == null)
@@ -55,101 +52,142 @@ public class UnityEventNode : CutsceneNode
                 continue;
             }
 
-            listenerGuids.Add(guidComponent.GUID);
-            methodNames.Add(unityEvent.GetPersistentMethodName(i));
+            var methods = target.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+                                    .Where(m => m.Name == unityEvent.GetPersistentMethodName(i))
+                                    .ToArray();
 
-            
-            var methodInfo = target.GetType().GetMethod(
-                unityEvent.GetPersistentMethodName(i),
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
-                null,
-                Type.EmptyTypes,  
-                null
-            );
-            if (methodInfo != null)
+            Debug.Log($"Methods found for {unityEvent.GetPersistentMethodName(i)} on {target.name}: {methods.Length}");
+
+            foreach (var methodInfo in methods)
             {
-                parameterTypes.Add(methodInfo.GetParameters().Select(p => p.ParameterType).ToArray());
+                if (methodInfo != null)
+                {
+                    var parameterType = methodInfo.GetParameters().FirstOrDefault()?.ParameterType ?? typeof(void);
+                    listeners.Add(new ListenerData(guidComponent.GUID, unityEvent.GetPersistentMethodName(i), parameterType));
+                    break;  // Only add the first matching method
+                }
             }
-            else
+
+            if (!listeners.Any(l => l.GUID == guidComponent.GUID && l.methodName == unityEvent.GetPersistentMethodName(i)))
             {
-                parameterTypes.Add(Type.EmptyTypes);  
                 Debug.LogWarning($"Method not found: {unityEvent.GetPersistentMethodName(i)} on {target.name}");
+                listeners.Add(new ListenerData(guidComponent.GUID, unityEvent.GetPersistentMethodName(i), typeof(void)));
             }
         }
+
+        if (listeners.Count != listenerCount)
+        {
+            Debug.LogError("ExtractListeners: List count does not match listener count. Please check the listener extraction logic.");
+            Debug.LogError($"listenerCount: {listenerCount}, listeners.Count: {listeners.Count}");
+        }
     }
-
-
-
 
 
     public void RebuildListeners()
     {
         unityEvent.RemoveAllListeners();
 
-        for (int i = 0; i < listenerGuids.Count; i++)
+        foreach (var listenerData in listeners)
         {
-            GameObject target = GameObject.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == listenerGuids[i])?.gameObject;
+            GameObject target = FindGameObjectByGUID(listenerData.GUID);
+
             if (target != null)
             {
                 bool methodFound = false;
 
+                // Ensure we're searching for the correct method
                 foreach (var component in target.GetComponents<Component>())
                 {
-                    var methods = component.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                                            .Where(m => m.Name == methodNames[i] && m.GetParameters().Select(p => p.ParameterType).SequenceEqual(parameterTypes[i]))
-                                            .ToArray();
+                    // Get all methods from the component type
+                    MethodInfo[] methods = component.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-                    foreach (var methodInfo in methods)
+                    // Attempt to find a matching method based on the method name
+                    foreach (var method in methods)
                     {
-                        if (methodInfo != null)
+                        if (method.Name.Equals(listenerData.methodName))
                         {
-                            var parameters = methodInfo.GetParameters();
-                            var delegateType = parameters.Length == 0
-                                                ? typeof(UnityAction)
-                                                : Expression.GetActionType(parameters.Select(p => p.ParameterType).Append(typeof(void)).ToArray());
+                            // Get method parameters
+                            ParameterInfo[] parameters = method.GetParameters();
 
-                            var action = Delegate.CreateDelegate(delegateType, component, methodInfo);
-
-                            if (action != null)
+                            // Handle methods with no parameters (like AudioSource.Play)
+                            if (parameters.Length == 0)
                             {
-                                if (parameters.Length == 0)
+                                // Special case for AudioSource.Play() (no parameters)
+                                if (method.Name == "Play" && component is AudioSource)
                                 {
-                                    unityEvent.AddListener((UnityAction)action);
+                                    // Create a delegate for the method and add the listener
+                                    Delegate action = Delegate.CreateDelegate(typeof(UnityAction), component, method);
+                                    unityEvent.AddListener(() => action.DynamicInvoke());
+                                    methodFound = true;
+                                    break;
                                 }
-                                else
+                            }
+                            // Handle methods with one parameter
+                            else if (parameters.Length == 1 && listenerData.parameterType != null)
+                            {
+                                Type parameterType = parameters[0].ParameterType;
+                                if (parameterType == listenerData.parameterType)
                                 {
-                                    unityEvent.AddListener(() => DynamicInvoke(action, parameters.Select(p => (object)null).ToArray())); // Provide the actual arguments here
+                                    Delegate action = Delegate.CreateDelegate(typeof(UnityAction<>).MakeGenericType(parameterType), component, method);
+                                    unityEvent.AddListener(() => action.DynamicInvoke(listenerData.parameterType));
+                                    methodFound = true;
+                                    break;
                                 }
-
-                                methodFound = true;
-                                Debug.Log($"Listener fixed: {component.GetType().Name}.{methodNames[i]} on {target.name}");
-                                break;
                             }
                         }
                     }
 
-                    if (methodFound) break;
+                    if (methodFound)
+                    {
+                        Debug.Log($"Listener fixed: {listenerData.methodName} on {target.name}");
+                        break;
+                    }
                 }
 
                 if (!methodFound)
                 {
-                    Debug.LogWarning($"Method not found: {methodNames[i]} on any component of {target.name}");
+                    Debug.LogWarning($"Method '{listenerData.methodName}' not found on any component of {target.name}");
                 }
             }
             else
             {
-                Debug.LogWarning($"Target not found for GUID: {listenerGuids[i]}");
+                Debug.LogWarning($"Target GameObject with GUID {listenerData.GUID} not found.");
             }
         }
     }
+
+
+    private GameObject FindGameObjectByGUID(string guid)
+    {
+        var guidComponent = GameObject.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == guid);
+        return guidComponent?.gameObject;
+    }
+
+
+
+
+
+
 
     private void DynamicInvoke(Delegate action, object[] args)
     {
         action.DynamicInvoke(args);
     }
 
+    private object GetDefaultValue(Type type)
+    {
+        if (type == typeof(string))
+        {
+            return "";  // Return default empty string for string parameters
+        }
+        return type.IsValueType ? Activator.CreateInstance(type) : null;
+    }
+
+
+
 
 }
+
 
 
 public class UnityEventNodeWrapper : ScriptableObject
@@ -158,5 +196,3 @@ public class UnityEventNodeWrapper : ScriptableObject
     public List<string> listenerGuids = new List<string>();
 
 }
-
-

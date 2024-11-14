@@ -25,17 +25,12 @@ public class CutsceneNodeData
 
 
     [SerializeField] public UnityEvent unityEvent = new UnityEvent();
-    public List<string> listenerGuids = new List<string>();
-    public List<string> methodNames = new List<string>();
-    public List<Type[]> parameterTypes = new List<Type[]>();
+    public List<ListenerData> listeners;
     public string eventName;
 
 
     public float delay;
 }
-
-
-
 
 public enum NodeType
 {
@@ -44,3 +39,18 @@ public enum NodeType
     UnityEvent,
     Delay,
 }
+[System.Serializable]
+public class ListenerData
+{
+    public string GUID;
+    public string methodName;
+    public Type parameterType;
+
+    public ListenerData(string guid, string methodName, Type parameterType)
+    {
+        this.GUID = guid;
+        this.methodName = methodName;
+        this.parameterType = parameterType;
+    }
+}
+
