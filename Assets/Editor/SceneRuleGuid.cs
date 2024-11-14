@@ -6,7 +6,7 @@ public static class SceneRuleGuid
 {
     static SceneRuleGuid()
     {
-        EditorApplication.hierarchyChanged += OnHierarchyChanged;
+        //EditorApplication.hierarchyChanged += OnHierarchyChanged; Re add this when working in cutscene scenes. Will add something more perma later.
     }
 
     private static void OnHierarchyChanged()
