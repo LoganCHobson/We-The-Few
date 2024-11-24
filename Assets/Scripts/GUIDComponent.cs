@@ -12,7 +12,7 @@ public class GUIDComponent : MonoBehaviour
         if (string.IsNullOrEmpty(guid))
         {
             guid = Guid.NewGuid().ToString();
-            Debug.Log($"Generated new GUID: {guid}");
+            //Debug.Log($"Generated new GUID: {guid}");
         }
     }
 }
