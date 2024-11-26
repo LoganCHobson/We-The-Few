@@ -3,16 +3,17 @@ using UnityEngine.AI;
 
 public abstract class AIBase : MonoBehaviour
 {
+    [HideInInspector]
     public NavMeshAgent agent;
+    [HideInInspector]
+    public object stateMachine; 
 
-    private void Start()
+    private Vector3 lastTargetPosition;
+
+    private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponentInParent<NavMeshAgent>();
 
-        if(agent == null )
-        {
-            agent = GetComponentInParent<NavMeshAgent>();
-        }
     }
     public NavMeshPathStatus GetPathStatus(Vector3 targetPosition)
     {
@@ -23,14 +24,16 @@ public abstract class AIBase : MonoBehaviour
 
     public void MoveToTarget(Vector3 targetPosition)
     {
+        if (targetPosition != lastTargetPosition)
+        {
+            agent.SetDestination(targetPosition);
+            lastTargetPosition = targetPosition;
+        }
+        else if (agent.remainingDistance <= agent.stoppingDistance) return;
         
-        if (agent.pathPending /* || agent.remainingDistance <= agent.stoppingDistance*/) return;
 
-        agent.SetDestination(targetPosition);
-        Debug.Log("Moving");
-        
         Vector3 direction = (targetPosition - transform.position).normalized;
-        if (direction.magnitude > 0.1f) 
+        if (direction.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * agent.angularSpeed);
