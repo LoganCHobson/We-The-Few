@@ -195,7 +195,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 50}
   m_MaxSize: {x: 24288, y: 8096}
   vertical: 0
-  controlID: 3423
+  controlID: 12820
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -326,7 +326,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/BK/PureNature_Mountains/Prefabs/Rocks
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -336,16 +336,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/BK/PureNature_Mountains/Prefabs/Rocks
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\aswal\OneDrive\Desktop\RPG\We-The-Few
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 40b30000
-    m_LastClickedID: 45888
-    m_ExpandedIDs: 0000000040b3000042b3000044b3000046b3000048b300004ab300004cb300004eb3000050b3000052b3000054b3000056b3000058b3000000ca9a3b
+    scrollPos: {x: 0, y: 143}
+    m_SelectedIDs: 42b70000
+    m_LastClickedID: 46914
+    m_ExpandedIDs: 0000000012b4000014b4000016b4000018b400001ab400001cb400001eb4000020b4000022b4000024b4000026b4000028b4000036b700003ab7000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -374,7 +374,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000040b3000042b3000044b3000046b3000048b300004ab300004cb300004eb3000050b3000052b3000054b3000056b3000058b30000
+    m_ExpandedIDs: 0000000012b4000014b4000016b4000018b400001ab400001cb400001eb4000020b4000022b4000024b4000026b4000028b40000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -573,7 +573,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: e8faffff
+      m_ExpandedIDs: 08a1feffdcfaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1199,9 +1199,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 316.24567, y: 179.84131, z: 190.85379}
+    m_Target: {x: 47.049904, y: -12.737179, z: 48.888077}
     speed: 2
-    m_Value: {x: 316.24567, y: 179.84131, z: 190.85379}
+    m_Value: {x: 47.049904, y: -12.737179, z: 48.888077}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1247,13 +1247,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.21678515, y: -0.030516854, z: 0.006914782, w: -0.9757989}
+    m_Target: {x: -0.3147574, y: 0.41374913, z: -0.15482318, w: -0.84018743}
     speed: 2
-    m_Value: {x: -0.21554606, y: -0.030523075, z: 0.0068760077, w: -0.9759923}
+    m_Value: {x: -0.3145404, y: 0.41477063, z: -0.15520588, w: -0.83960754}
   m_Size:
-    m_Target: 110.7607
+    m_Target: 71.8369
     speed: 2
-    m_Value: 115.97979
+    m_Value: 68.74345
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1376,8 +1376,8 @@ MonoBehaviour:
   ah: 1
   ai: 0
   aj: 0
-  ak: 4.9
-  al: 6.8600016
+  ak: 4.285713
+  al: 6
   am: 0
   an: 27.5
   ao: 0
