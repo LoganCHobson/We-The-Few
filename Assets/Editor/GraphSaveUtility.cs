@@ -101,10 +101,9 @@ public class GraphSaveUtility
                     position = node.GetPosition().position,
                     eventName = (node as UnityEventNode).eventName,
                     unityEvent = (node as UnityEventNode).unityEvent,
-                    listenerGuids = (node as UnityEventNode).listenerGuids,
-                    methodNames = (node as UnityEventNode).methodNames,
-                    parameterTypes = (node as UnityEventNode).parameterTypes,
+                    listeners = (node as UnityEventNode).listeners, 
                 },
+
                 NodeType.Delay => new CutsceneNodeData
                 {
                     type = node.type,
@@ -199,12 +198,11 @@ public class GraphSaveUtility
 
                 case NodeType.UnityEvent:
                     var unityEventNode = targetGraphView.CreateUnityEventNode(nodeData.nodeName, Vector2.zero, nodeData.unityEvent);
-                    unityEventNode.listenerGuids = nodeData.listenerGuids;
-                    unityEventNode.methodNames = nodeData.methodNames;
-                    unityEventNode.parameterTypes = nodeData.parameterTypes;
+                    unityEventNode.listeners = nodeData.listeners;  
                     unityEventNode.RebuildListeners();
                     tempNode = unityEventNode;
                     break;
+
 
                 case NodeType.Delay:
                     tempNode = targetGraphView.CreateDelayNode(nodeData.nodeName, Vector2.zero, nodeData.delay);
@@ -229,8 +227,6 @@ public class GraphSaveUtility
     }
 
 
-
-
     private void ClearGraph()
     {
         //Set entry points guid back from the save. Discard existing guid. Entry point is always there, gotta clean it.
@@ -251,13 +247,13 @@ public class GraphSaveUtility
         }
     }
     //This is to fix the issue where we loose the target of the Unity events. Unfortunatly Unity is insanely dumb and we gotta do it this way.
-    public UnityEvent ListenerFixer(List<string> listenerGuids, List<string> methodNames, List<Type[]> parameterTypes, UnityEvent unityEvent)
+    public UnityEvent ListenerFixer(List<ListenerData> listeners, UnityEvent unityEvent)
     {
         unityEvent.RemoveAllListeners();
 
-        for (int i = 0; i < listenerGuids.Count; i++)
+        foreach (var listener in listeners)
         {
-            GameObject target = GameObject.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == listenerGuids[i])?.gameObject;
+            GameObject target = GameObject.FindObjectsOfType<GUIDComponent>().FirstOrDefault(g => g.GUID == listener.GUID)?.gameObject;
             if (target != null)
             {
                 bool methodFound = false;
@@ -265,23 +261,31 @@ public class GraphSaveUtility
                 foreach (var component in target.GetComponents<Component>())
                 {
                     var methodInfo = component.GetType().GetMethod(
-                        methodNames[i],
+                        listener.methodName,
                         BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
                         null,
-                        parameterTypes[i],
+                        new Type[] { listener.parameterType },
                         null
                     );
 
                     if (methodInfo != null)
                     {
-                        var delegateType = Expression.GetActionType(parameterTypes[i].Append(typeof(void)).ToArray());
-                        var action = Delegate.CreateDelegate(delegateType, component, methodInfo);
+                        Delegate action = null;
+                        if (listener.parameterType == typeof(void))
+                        {
+                            action = Delegate.CreateDelegate(typeof(UnityAction), component, methodInfo);
+                        }
+                        else
+                        {
+                            var delegateType = typeof(UnityAction<>).MakeGenericType(new Type[] { listener.parameterType });
+                            action = Delegate.CreateDelegate(delegateType, component, methodInfo);
+                        }
 
                         if (action != null)
                         {
-                            unityEvent.AddListener((UnityAction)action);
+                            unityEvent.AddListener(() => DynamicInvoke(action, new object[] { GetDefaultValue(listener.parameterType) }));
                             methodFound = true;
-                            Debug.Log($"Listener fixed: {component.GetType().Name}.{methodNames[i]} on {target.name}");
+                            Debug.Log($"Listener fixed: {component.GetType().Name}.{listener.methodName} on {target.name}");
                             break;
                         }
                     }
@@ -289,17 +293,28 @@ public class GraphSaveUtility
 
                 if (!methodFound)
                 {
-                    Debug.LogWarning($"Method not found: {methodNames[i]} on any component of {target.name}");
+                    Debug.LogWarning($"Method not found: {listener.methodName} on any component of {target.name}");
                 }
             }
             else
             {
-                Debug.LogWarning($"Target not found for GUID: {listenerGuids[i]}");
+                Debug.LogWarning($"Target not found for GUID: {listener.GUID}");
             }
         }
 
         return unityEvent;
     }
+
+    private void DynamicInvoke(Delegate action, object[] args)
+    {
+        action.DynamicInvoke(args);
+    }
+
+    private object GetDefaultValue(Type type)
+    {
+        return type.IsValueType ? Activator.CreateInstance(type) : null;
+    }
+
 
 
 
