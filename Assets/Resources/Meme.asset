@@ -13,29 +13,35 @@ MonoBehaviour:
   m_Name: Meme
   m_EditorClassIdentifier: 
   nodeLinks:
-  - baseNodeGuid: 135bbd5d-7ad8-4042-a272-d75a38fd18e6
+  - baseNodeGuid: 881cb952-2c39-4e7b-b950-febdb518245a
     portName: Next
-    targetNodeGuid: 696ba330-6014-41d7-bb3d-edc69a1bae7f
-  - baseNodeGuid: 696ba330-6014-41d7-bb3d-edc69a1bae7f
+    targetNodeGuid: 38918a3d-ae09-4c52-95b9-65640d352b31
+  - baseNodeGuid: 38918a3d-ae09-4c52-95b9-65640d352b31
     portName: Start
-    targetNodeGuid: dd1a92fa-1b68-4b70-a705-b860a3011a6f
-  - baseNodeGuid: dd1a92fa-1b68-4b70-a705-b860a3011a6f
+    targetNodeGuid: 4c6170a6-2e83-42c5-bbb3-5ac6a003327a
+  - baseNodeGuid: 4c6170a6-2e83-42c5-bbb3-5ac6a003327a
     portName: Output
-    targetNodeGuid: 66600896-63c8-4693-a317-b9f4aec31fdb
-  - baseNodeGuid: 66600896-63c8-4693-a317-b9f4aec31fdb
+    targetNodeGuid: cc5745d5-860a-4998-99f7-80d4f63e59d1
+  - baseNodeGuid: cc5745d5-860a-4998-99f7-80d4f63e59d1
     portName: Output
-    targetNodeGuid: fedf9819-ef9d-4c5c-b947-c95706014947
-  - baseNodeGuid: 84717c48-aedd-460d-a220-9b6db153f113
+    targetNodeGuid: 51049bf2-9082-484a-97f7-22ee464d7e1c
+  - baseNodeGuid: 51049bf2-9082-484a-97f7-22ee464d7e1c
     portName: Output
-    targetNodeGuid: b3b58759-4d66-4b42-9061-e5f57ca8291d
-  - baseNodeGuid: fedf9819-ef9d-4c5c-b947-c95706014947
+    targetNodeGuid: 5202ae83-c745-44e6-b96e-6bfd6f1969c0
+  - baseNodeGuid: 5202ae83-c745-44e6-b96e-6bfd6f1969c0
     portName: Output
-    targetNodeGuid: 84717c48-aedd-460d-a220-9b6db153f113
+    targetNodeGuid: a0675043-17eb-4baf-887c-4c0ecba988b6
+  - baseNodeGuid: a0675043-17eb-4baf-887c-4c0ecba988b6
+    portName: Output
+    targetNodeGuid: 9ffce194-16ca-4814-9781-def40649c3aa
+  - baseNodeGuid: 9ffce194-16ca-4814-9781-def40649c3aa
+    portName: Output
+    targetNodeGuid: 78c14a11-7e43-4daa-bca9-7bb48ffe0ddf
   cutsceneNodeData:
   - type: 0
     nodeName: Dialogue Node
-    guid: 696ba330-6014-41d7-bb3d-edc69a1bae7f
-    position: {x: 212, y: 201.6}
+    guid: 38918a3d-ae09-4c52-95b9-65640d352b31
+    position: {x: 232, y: 200}
     dialogText: .
     cameraGuid: 
     focusGuid: 
@@ -49,8 +55,8 @@ MonoBehaviour:
     delay: 0
   - type: 2
     nodeName: UnityEvent Node
-    guid: dd1a92fa-1b68-4b70-a705-b860a3011a6f
-    position: {x: 476.8, y: 204}
+    guid: 4c6170a6-2e83-42c5-bbb3-5ac6a003327a
+    position: {x: 486, y: 200}
     dialogText: 
     cameraGuid: 
     focusGuid: 
@@ -83,9 +89,9 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -101,13 +107,13 @@ MonoBehaviour:
     methodNames:
     - Play
     - Play
-    - SetActive
+    - Play
     eventName: 
     delay: 0
   - type: 3
     nodeName: Delay Node
-    guid: 66600896-63c8-4693-a317-b9f4aec31fdb
-    position: {x: 851.2, y: 202.40001}
+    guid: cc5745d5-860a-4998-99f7-80d4f63e59d1
+    position: {x: 871, y: 200}
     dialogText: 
     cameraGuid: 
     focusGuid: 
@@ -121,51 +127,8 @@ MonoBehaviour:
     delay: 2
   - type: 2
     nodeName: UnityEvent Node
-    guid: fedf9819-ef9d-4c5c-b947-c95706014947
-    position: {x: 1044.8, y: 204.8}
-    dialogText: 
-    cameraGuid: 
-    focusGuid: 
-    cameraZoomLevel: 0
-    unityEvent:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-    listenerGuids:
-    - e4c8889d-9de8-4074-ba1d-cc77b74395a5
-    - e4c8889d-9de8-4074-ba1d-cc77b74395a5
-    methodNames:
-    - SetActive
-    - SetActive
-    eventName: 
-    delay: 0
-  - type: 2
-    nodeName: UnityEvent Node
-    guid: b3b58759-4d66-4b42-9061-e5f57ca8291d
-    position: {x: 1571.2, y: 200.8}
+    guid: 51049bf2-9082-484a-97f7-22ee464d7e1c
+    position: {x: 1035, y: 200}
     dialogText: 
     cameraGuid: 
     focusGuid: 
@@ -207,8 +170,8 @@ MonoBehaviour:
     delay: 0
   - type: 3
     nodeName: Delay Node
-    guid: 84717c48-aedd-460d-a220-9b6db153f113
-    position: {x: 1387.2, y: 202.40001}
+    guid: 5202ae83-c745-44e6-b96e-6bfd6f1969c0
+    position: {x: 1377, y: 200}
     dialogText: 
     cameraGuid: 
     focusGuid: 
@@ -219,5 +182,106 @@ MonoBehaviour:
     listenerGuids: []
     methodNames: []
     eventName: 
-    delay: 0.5
+    delay: 1
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: a0675043-17eb-4baf-887c-4c0ecba988b6
+    position: {x: 1565, y: 200}
+    dialogText: 
+    cameraGuid: 
+    focusGuid: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    listenerGuids:
+    - e4c8889d-9de8-4074-ba1d-cc77b74395a5
+    - e4c8889d-9de8-4074-ba1d-cc77b74395a5
+    methodNames:
+    - SetActive
+    - SetActive
+    eventName: 
+    delay: 0
+  - type: 3
+    nodeName: Delay Node
+    guid: 9ffce194-16ca-4814-9781-def40649c3aa
+    position: {x: 1897, y: 200}
+    dialogText: 
+    cameraGuid: 
+    focusGuid: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    listenerGuids: []
+    methodNames: []
+    eventName: 
+    delay: 1
+  - type: 2
+    nodeName: UnityEvent Node
+    guid: 78c14a11-7e43-4daa-bca9-7bb48ffe0ddf
+    position: {x: 2091, y: 200}
+    dialogText: 
+    cameraGuid: 
+    focusGuid: 
+    cameraZoomLevel: 0
+    unityEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    listenerGuids:
+    - e4c8889d-9de8-4074-ba1d-cc77b74395a5
+    - e4c8889d-9de8-4074-ba1d-cc77b74395a5
+    methodNames:
+    - SetActive
+    - SetActive
+    eventName: 
+    delay: 0
   exposedProperties: []

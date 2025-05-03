@@ -245,7 +245,7 @@ public class CutsceneGraphView : GraphView
         
         var eventField = new PropertyField();
         eventField.bindingPath = "unityEvent";
-        eventField.Bind(new SerializedObject(wrapper));
+        eventField.Bind(new SerializedObject(unityEvent));
         unityEventNode.mainContainer.Add(eventField);
 
         Port inputPort = AddPort(unityEventNode, Direction.Input, Port.Capacity.Multi);
